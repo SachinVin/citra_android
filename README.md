@@ -1,10 +1,12 @@
 # Citra for Android
 An (Unofficial) Android fronend for the Citra Emulator
 
-This is an uofficial port for the [Citra emulator](https://github.com/citra-emu) based on the [Dolphin emulator's](https://github.com/dolphin-emu) frontend.
+This is an unofficial port for the [Citra emulator](https://github.com/citra-emu) based on the [Dolphin emulator's](https://github.com/dolphin-emu) frontend.
 So, huge props to the guys over there.
 
 Since this code almost entirely a copy of the dolphin frontend,there are a lot of useless segments in here that aren't being used ... or are useless.
+
+**Download** apk files from [here](https://github.com/SachinVin/citra_android/releases)
 
 ### Building
 You can follow [this guide](https://github.com/dolphin-emu/dolphin/blob/master/AndroidSetup.md) if haven't set up your android environment.
