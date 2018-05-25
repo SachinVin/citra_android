@@ -74,9 +74,17 @@ android {
                         "-DANDROID_ARM_NEON=true", // cryptopp requires Neon to work
                         "-DCMAKE_BUILD_TYPE=Debug"
 
-
                 abiFilters "arm64-v8a", "x86_64", "armeabi-v7a"//, "x86"
             }
+        }
+    }
+    splits{
+        abi{
+            enable true
+
+            include "arm64-v8a", "x86_64", "armeabi-v7a"
+
+            universalApk false
         }
     }
 }
@@ -103,6 +111,7 @@ dependencies {
     // Allows FRP-style asynchronous operations in Android.
     implementation 'io.reactivex:rxandroid:1.2.1'
     implementation 'com.nononsenseapps:filepicker:4.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }
 
 def getVersion() {
