@@ -48,6 +48,11 @@ import org.citra.citra_android.utils.Java_WiimoteAdapter;
 import java.lang.annotation.Retention;
 import java.util.List;
 
+import static android.view.MotionEvent.AXIS_RX;
+import static android.view.MotionEvent.AXIS_RZ;
+import static android.view.MotionEvent.AXIS_X;
+import static android.view.MotionEvent.AXIS_Y;
+import static android.view.MotionEvent.AXIS_Z;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public final class EmulationActivity extends AppCompatActivity
@@ -733,17 +738,27 @@ public final class EmulationActivity extends AppCompatActivity
 		InputDevice input = event.getDevice();
 		List<InputDevice.MotionRange> motions = input.getMotionRanges();
 
+		float[] axisValues = {0.0f, 0.0f};
 		for (InputDevice.MotionRange range : motions)
 		{
 			int axis = range.getAxis();
 			float origValue = event.getAxisValue(axis);
 			float value = mControllerMappingHelper.scaleAxis(input, axis, origValue);
+
+			if(axis == AXIS_X || axis == AXIS_Z)
+			{
+			    axisValues[0] = value;
+            }
+            else if (axis == AXIS_Y || axis == AXIS_RZ)
+            {
+                axisValues[1] = value;
+            }
+
 			// If the input is still in the "flat" area, that means it's really zero.
 			// This is used to compensate for imprecision in joysticks.
-			if (Math.abs(value) > range.getFlat())
+			if (Math.abs(axisValues[0]) > range.getFlat() || Math.abs(axisValues[1]) > range.getFlat())
 			{
-				// TODO: get the values of x and y axises
-				NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, value, value);
+				NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, axisValues[0], axisValues[1]);
 			}
 			else
 			{
