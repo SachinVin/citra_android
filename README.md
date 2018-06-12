@@ -29,7 +29,6 @@ You're all set, now hit build.
     
 ### Known Issues
 Since this is a early development a most of the stuff dosen't work
-* Controls
 * In App Settings(you can edit the settings at [internal_storage]/citra-emu/config/config.ini)
 * Colors in games (since GLES dosent support BGR color scheme, the color channels may be inverted)
 * Since this is based on an older version of Citra, bugs solved on newer versions of citra may still be present
