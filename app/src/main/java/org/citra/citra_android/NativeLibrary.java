@@ -185,6 +185,31 @@ public final class NativeLibrary
 		public static final int TURNTABLE_CROSSFADE          = 622;
 		public static final int TURNTABLE_CROSSFADE_LEFT     = 623;
 		public static final int TURNTABLE_CROSSFADE_RIGHT    = 624;
+		public static final int N3DS_BUTTON_A                = 700;
+		public static final int N3DS_BUTTON_B                = 701;
+		public static final int N3DS_BUTTON_X                = 702;
+		public static final int N3DS_BUTTON_Y                = 703;
+		public static final int N3DS_BUTTON_START            = 704;
+		public static final int N3DS_BUTTON_SELECT           = 705;
+		public static final int N3DS_BUTTON_HOME             = 706;
+		public static final int N3DS_BUTTON_ZL               = 707;
+		public static final int N3DS_BUTTON_ZR               = 708;
+		public static final int N3DS_DPAD_UP                 = 709;
+		public static final int N3DS_DPAD_DOWN               = 710;
+		public static final int N3DS_DPAD_LEFT               = 711;
+		public static final int N3DS_DPAD_RIGHT              = 712;
+		public static final int N3DS_STICK_LEFT              = 713;
+		public static final int N3DS_STICK_LEFT_UP           = 714;
+		public static final int N3DS_STICK_LEFT_DOWN         = 715;
+		public static final int N3DS_STICK_LEFT_LEFT         = 716;
+		public static final int N3DS_STICK_LEFT_RIGHT        = 717;
+		public static final int N3DS_STICK_C                 = 718;
+		public static final int N3DS_STICK_C_UP              = 719;
+		public static final int N3DS_STICK_C_DOWN            = 720;
+		public static final int N3DS_STICK_C_LEFT            = 771;
+		public static final int N3DS_STICK_C_RIGHT           = 772;
+		public static final int N3DS_TRIGGER_L               = 773;
+		public static final int N3DS_TRIGGER_R               = 774;
 	}
 
 	/**
@@ -222,9 +247,10 @@ public final class NativeLibrary
 	 *
 	 * @param Device The device ID of the gamepad.
 	 * @param Axis   The axis ID
-	 * @param Value  The value of the axis represented by the given ID.
+	 * @param x_axis  The value of the x-axis represented by the given ID.
+	 * @param y_axis  The value of the y-axis represented by the given ID
 	 */
-	public static native void onGamePadMoveEvent(String Device, int Axis, float Value);
+	public static native void onGamePadMoveEvent(String Device, int Axis, float x_axis, float y_axis);
 
 	public static native String GetUserSetting(String gameID, String Section, String Key);
 

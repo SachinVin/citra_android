@@ -26,7 +26,6 @@ import org.citra.citra_android.NativeLibrary;
 import org.citra.citra_android.NativeLibrary.ButtonState;
 import org.citra.citra_android.NativeLibrary.ButtonType;
 import org.citra.citra_android.R;
-import org.citra.citra_android.activities.EmulationActivity;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -210,13 +209,10 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 		for (InputOverlayDrawableJoystick joystick : overlayJoysticks)
 		{
 			joystick.TrackEvent(event);
-			int[] axisIDs = joystick.getAxisIDs();
+			int axisID = joystick.getId();
 			float[] axises = joystick.getAxisValues();
 
-			for (int i = 0; i < 4; i++)
-			{
-				NativeLibrary.onGamePadMoveEvent(NativeLibrary.TouchScreenDevice, axisIDs[i], axises[i]);
-			}
+			NativeLibrary.onGamePadMoveEvent(NativeLibrary.TouchScreenDevice, axisID, axises[0],axises[1]);
 		}
 
 		invalidate();
@@ -550,6 +546,56 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 		}
 	}
 
+	private void add3dsOverlayControls() {
+		if (mPreferences.getBoolean("buttonToggle3ds0", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_a, R.drawable.classic_a_pressed, ButtonType.N3DS_BUTTON_A));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds1", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_b, R.drawable.classic_b_pressed, ButtonType.N3DS_BUTTON_B));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds2", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_x, R.drawable.classic_x_pressed, ButtonType.N3DS_BUTTON_X));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds3", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_y, R.drawable.classic_y_pressed, ButtonType.N3DS_BUTTON_Y));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds6", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.wiimote_home, R.drawable.wiimote_home_pressed, ButtonType.N3DS_BUTTON_HOME));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds7", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_l, R.drawable.classic_l_pressed, ButtonType.N3DS_TRIGGER_L));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds8", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_r, R.drawable.classic_r_pressed, ButtonType.N3DS_TRIGGER_R));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds9", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_zl, R.drawable.classic_zl_pressed, ButtonType.N3DS_BUTTON_ZL));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds10", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_zr, R.drawable.classic_zr_pressed, ButtonType.N3DS_BUTTON_ZR));
+		}
+        if (mPreferences.getBoolean("buttonToggle3ds11", true)) {
+            overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.gcpad_start, R.drawable.gcpad_start_pressed, ButtonType.N3DS_BUTTON_START));
+        }
+        if (mPreferences.getBoolean("buttonToggle3ds12", true)) {
+            overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.n3ds_select, R.drawable.n3ds_select_pressed, ButtonType.N3DS_BUTTON_SELECT));
+        }
+		if (mPreferences.getBoolean("buttonToggle3ds13", true)) {
+			overlayDpads.add(initializeOverlayDpad(getContext(), R.drawable.gcwii_dpad,
+					R.drawable.gcwii_dpad_pressed_one_direction, R.drawable.gcwii_dpad_pressed_two_directions,
+					ButtonType.N3DS_DPAD_UP, ButtonType.N3DS_DPAD_DOWN,
+					ButtonType.N3DS_DPAD_LEFT, ButtonType.N3DS_DPAD_RIGHT));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds14", true)) {
+			overlayJoysticks.add(initializeOverlayJoystick(getContext(), R.drawable.gcwii_joystick_range,
+					R.drawable.gcwii_joystick, R.drawable.gcwii_joystick_pressed, ButtonType.N3DS_STICK_LEFT));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds15", true)) {
+            overlayJoysticks.add(initializeOverlayJoystick(getContext(), R.drawable.gcwii_joystick_range,
+                    R.drawable.gcpad_c, R.drawable.gcpad_c_pressed, ButtonType.N3DS_STICK_C));
+		}
+	}
+
 	public void refreshControls()
 	{
 		// Remove all the overlay buttons from the HashSet.
@@ -557,6 +603,8 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 		overlayDpads.removeAll(overlayDpads);
 		overlayJoysticks.removeAll(overlayJoysticks);
 
+		// TODO : Remove this
+/*
 		// Add all the enabled overlay items back to the HashSet.
 		if (EmulationActivity.isGameCubeGame() || mPreferences.getInt("wiiController", 3) == 0)
 		{
@@ -574,6 +622,8 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 				addNunchukOverlayControls();
 			}
 		}
+*/
+        add3dsOverlayControls();
 
 		invalidate();
 	}
@@ -659,12 +709,19 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 		case ButtonType.CLASSIC_BUTTON_PLUS:
 		case ButtonType.CLASSIC_BUTTON_MINUS:
 		case ButtonType.CLASSIC_BUTTON_HOME:
-			scale = 0.0625f;
+        case ButtonType.N3DS_BUTTON_HOME:
+        case ButtonType.N3DS_BUTTON_START:
+        case ButtonType.N3DS_BUTTON_SELECT:
+            scale = 0.0625f;
 			break;
 		case ButtonType.CLASSIC_TRIGGER_L:
 		case ButtonType.CLASSIC_TRIGGER_R:
 		case ButtonType.CLASSIC_BUTTON_ZL:
 		case ButtonType.CLASSIC_BUTTON_ZR:
+		case ButtonType.N3DS_TRIGGER_L:
+        case ButtonType.N3DS_TRIGGER_R:
+        case ButtonType.N3DS_BUTTON_ZL:
+        case ButtonType.N3DS_BUTTON_ZR:
 			scale = 0.25f;
 			break;
 		default:
@@ -736,6 +793,7 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 			scale = 0.2375f;
 			break;
 		case ButtonType.CLASSIC_DPAD_UP:
+        case ButtonType.N3DS_DPAD_UP:
 			scale = 0.275f;
 			break;
 		default:
@@ -812,6 +870,7 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 		switch (joystick)
 		{
 		case ButtonType.STICK_C:
+        case ButtonType.N3DS_STICK_C:
 			innerScale = 1.833f;
 			break;
 		default:

@@ -742,11 +742,12 @@ public final class EmulationActivity extends AppCompatActivity
 			// This is used to compensate for imprecision in joysticks.
 			if (Math.abs(value) > range.getFlat())
 			{
-				NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, value);
+				// TODO: get the values of x and y axises
+				NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, value, value);
 			}
 			else
 			{
-				NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, 0.0f);
+				NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, 0.0f, 0.0f);
 			}
 		}
 

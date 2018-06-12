@@ -50,10 +50,10 @@ public final class InputOverlayDrawableJoystick
                                         Bitmap bitmapInnerDefault, Bitmap bitmapInnerPressed,
                                         Rect rectOuter, Rect rectInner, int joystick)
 	{
-		axisIDs[0] = joystick + 1;
-		axisIDs[1] = joystick + 2;
-		axisIDs[2] = joystick + 3;
-		axisIDs[3] = joystick + 4;
+		axisIDs[0] = joystick + 1; // Up
+		axisIDs[1] = joystick + 2; // Down
+		axisIDs[2] = joystick + 3; // Left
+		axisIDs[3] = joystick + 4; // Right
 		mJoystickType = joystick;
 
 		mOuterBitmap = new BitmapDrawable(res, bitmapOuter);
@@ -141,8 +141,8 @@ public final class InputOverlayDrawableJoystick
 				maxY -= getVirtBounds().centerY();
 				final float AxisX = touchX / maxX;
 				final float AxisY = touchY / maxY;
-				axises[0] = AxisY;
-				axises[1] = AxisX;
+				axises[0] = AxisX;
+				axises[1] = AxisY;
 
 				SetInnerBounds();
 			}
@@ -184,13 +184,8 @@ public final class InputOverlayDrawableJoystick
 
 
 	public float[] getAxisValues()
-	{
-		float[] joyaxises = {0f, 0f, 0f, 0f};
-		joyaxises[1] = Math.min(axises[0], 1.0f);
-		joyaxises[0] = Math.min(axises[0], 0.0f);
-		joyaxises[3] = Math.min(axises[1], 1.0f);
-		joyaxises[2] = Math.min(axises[1], 0.0f);
-		return joyaxises;
+    {
+	    return axises;
 	}
 
 	public int[] getAxisIDs()
