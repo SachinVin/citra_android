@@ -185,7 +185,7 @@ public final class InputOverlayDrawableJoystick
 
 	public float[] getAxisValues()
     {
-	    return axises;
+    	return axises;
 	}
 
 	public int[] getAxisIDs()
@@ -195,8 +195,8 @@ public final class InputOverlayDrawableJoystick
 
 	private void SetInnerBounds()
 	{
-		int X = getVirtBounds().centerX() + (int)((axises[1]) * (getVirtBounds().width() / 2));
-		int Y = getVirtBounds().centerY() + (int)((axises[0]) * (getVirtBounds().height() / 2));
+		int X = getVirtBounds().centerX() + (int)((axises[0]) * (getVirtBounds().width() / 2));
+		int Y = getVirtBounds().centerY() + (int)((axises[1]) * (getVirtBounds().height() / 2));
 
 		if (X > getVirtBounds().centerX() + (getVirtBounds().width() / 2))
 			X = getVirtBounds().centerX() + (getVirtBounds().width() / 2);
