@@ -19,11 +19,11 @@
     <application
         android:name=".DolphinApplication"
         android:label="@string/app_name"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ic_citra"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:isGame="true"
-        android:banner="@drawable/banner_tv">
+        android:banner="@drawable/ic_citra">
 
         <activity
             android:name=".ui.main.MainActivity"

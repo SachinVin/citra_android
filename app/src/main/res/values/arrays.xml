@@ -288,6 +288,23 @@
         <item>Right Stick</item>
     </string-array>
 
+    <string-array name="n3dsButtons">
+        <item>a</item>
+        <item>b</item>
+        <item>x</item>
+        <item>y</item>
+        <item>L</item>
+        <item>R</item>
+        <item>ZL</item>
+        <item>ZR</item>
+        <item>Start</item>
+        <item>Select</item>
+        <item>Home</item>
+        <item>D-Pad</item>
+        <item>Circle Pad</item>
+        <item>C Stick</item>
+    </string-array>
+
     <string-array name="gameSettingsMenus">
         <item>Core Settings</item>
         <item>GFX Settings</item>
