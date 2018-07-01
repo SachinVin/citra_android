@@ -13,14 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import org.citra.citra_android.R;
-import org.citra.citra_android.adapters.PlatformPagerAdapter;
 import org.citra.citra_android.model.GameProvider;
 import org.citra.citra_android.services.DirectoryInitializationService;
 import org.citra.citra_android.ui.platform.Platform;
+import org.citra.citra_android.ui.platform.PlatformGamesFragment;
 import org.citra.citra_android.ui.platform.PlatformGamesView;
 import org.citra.citra_android.ui.settings.SettingsActivity;
 import org.citra.citra_android.utils.AddDirectoryHelper;
@@ -37,6 +36,8 @@ public final class MainActivity extends AppCompatActivity implements MainView
 	private ViewPager mViewPager;
 	private Toolbar mToolbar;
 	private TabLayout mTabLayout;
+	private int mFrameLayoutId;
+	private PlatformGamesFragment mPlatformGamesFragment;
 	private FloatingActionButton mFab;
 
 	private MainPresenter mPresenter = new MainPresenter(this);
@@ -51,7 +52,7 @@ public final class MainActivity extends AppCompatActivity implements MainView
 
 		setSupportActionBar(mToolbar);
 
-		mTabLayout.setupWithViewPager(mViewPager);
+		mFrameLayoutId = R.id.games_platform_frame;
 
 		// Set up the FAB.
 		mFab.setOnClickListener(view -> mPresenter.onFabClick());
@@ -64,11 +65,8 @@ public final class MainActivity extends AppCompatActivity implements MainView
 
 		if (PermissionsHandler.hasWriteAccess(this))
 		{
-			PlatformPagerAdapter platformPagerAdapter = new PlatformPagerAdapter(
-					getSupportFragmentManager(), this);
-			mViewPager.setAdapter(platformPagerAdapter);
-		} else {
-			mViewPager.setVisibility(View.INVISIBLE);
+			mPlatformGamesFragment = PlatformGamesFragment.newInstance(Platform.fromInt(0));
+			getSupportFragmentManager().beginTransaction().add(mFrameLayoutId,mPlatformGamesFragment).commit();
 		}
 	}
 
@@ -83,8 +81,6 @@ public final class MainActivity extends AppCompatActivity implements MainView
 	private void findViews()
 	{
 		mToolbar = findViewById(R.id.toolbar_main);
-		mViewPager = findViewById(R.id.pager_platforms);
-		mTabLayout = findViewById(R.id.tabs_platforms);
 		mFab = findViewById(R.id.button_add_directory);
 	}
 
@@ -117,8 +113,7 @@ public final class MainActivity extends AppCompatActivity implements MainView
 	public void refreshFragmentScreenshot(int fragmentPosition)
 	{
 		// Invalidate Picasso image so that the new screenshot is animated in.
-		Platform platform = Platform.fromPosition(mViewPager.getCurrentItem());
-		PlatformGamesView fragment = getPlatformGamesView(platform);
+		PlatformGamesView fragment = getPlatformGamesView();
 
 		if (fragment != null)
 		{
@@ -175,11 +170,8 @@ public final class MainActivity extends AppCompatActivity implements MainView
 				if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					DirectoryInitializationService.startService(this);
 
-					PlatformPagerAdapter platformPagerAdapter = new PlatformPagerAdapter(
-							getSupportFragmentManager(), this);
-					mViewPager.setAdapter(platformPagerAdapter);
-					mTabLayout.setupWithViewPager(mViewPager);
-					mViewPager.setVisibility(View.VISIBLE);
+					mPlatformGamesFragment = PlatformGamesFragment.newInstance(Platform.fromInt(0));
+					getSupportFragmentManager().beginTransaction().add(mFrameLayoutId,mPlatformGamesFragment).commit();
 				} else {
 					Toast.makeText(this, R.string.write_permission_needed, Toast.LENGTH_SHORT)
 							.show();
@@ -205,20 +197,15 @@ public final class MainActivity extends AppCompatActivity implements MainView
 
 	private void refreshFragment()
 	{
-
-		Platform platform = Platform.fromPosition(mViewPager.getCurrentItem());
-		PlatformGamesView fragment = getPlatformGamesView(platform);
-		if (fragment != null)
+		if (mPlatformGamesFragment != null)
 		{
-			fragment.refresh();
+			mPlatformGamesFragment.refresh();
 		}
 	}
 
 	@Nullable
-	private PlatformGamesView getPlatformGamesView(Platform platform)
+	private PlatformGamesView getPlatformGamesView()
 	{
-		String fragmentTag = "android:switcher:" + mViewPager.getId() + ":" + platform.toInt();
-
-		return (PlatformGamesView) getSupportFragmentManager().findFragmentByTag(fragmentTag);
+		return (PlatformGamesView) getSupportFragmentManager().findFragmentById(mFrameLayoutId);
 	}
 }
