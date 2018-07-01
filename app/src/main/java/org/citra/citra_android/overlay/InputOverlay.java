@@ -559,38 +559,38 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 		if (mPreferences.getBoolean("buttonToggle3ds3", true)) {
 			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_y, R.drawable.classic_y_pressed, ButtonType.N3DS_BUTTON_Y));
 		}
-		if (mPreferences.getBoolean("buttonToggle3ds6", true)) {
-			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.wiimote_home, R.drawable.wiimote_home_pressed, ButtonType.N3DS_BUTTON_HOME));
-		}
-		if (mPreferences.getBoolean("buttonToggle3ds7", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds4", true)) {
 			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_l, R.drawable.classic_l_pressed, ButtonType.N3DS_TRIGGER_L));
 		}
-		if (mPreferences.getBoolean("buttonToggle3ds8", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds5", true)) {
 			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_r, R.drawable.classic_r_pressed, ButtonType.N3DS_TRIGGER_R));
 		}
-		if (mPreferences.getBoolean("buttonToggle3ds9", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds6", true)) {
 			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_zl, R.drawable.classic_zl_pressed, ButtonType.N3DS_BUTTON_ZL));
 		}
-		if (mPreferences.getBoolean("buttonToggle3ds10", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds7", true)) {
 			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.classic_zr, R.drawable.classic_zr_pressed, ButtonType.N3DS_BUTTON_ZR));
 		}
-        if (mPreferences.getBoolean("buttonToggle3ds11", true)) {
+        if (mPreferences.getBoolean("buttonToggle3ds8", true)) {
             overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.gcpad_start, R.drawable.gcpad_start_pressed, ButtonType.N3DS_BUTTON_START));
         }
-        if (mPreferences.getBoolean("buttonToggle3ds12", true)) {
+        if (mPreferences.getBoolean("buttonToggle3ds9", true)) {
             overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.n3ds_select, R.drawable.n3ds_select_pressed, ButtonType.N3DS_BUTTON_SELECT));
         }
-		if (mPreferences.getBoolean("buttonToggle3ds13", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds10", true)) {
+			overlayButtons.add(initializeOverlayButton(getContext(), R.drawable.wiimote_home, R.drawable.wiimote_home_pressed, ButtonType.N3DS_BUTTON_HOME));
+		}
+		if (mPreferences.getBoolean("buttonToggle3ds11", true)) {
 			overlayDpads.add(initializeOverlayDpad(getContext(), R.drawable.gcwii_dpad,
 					R.drawable.gcwii_dpad_pressed_one_direction, R.drawable.gcwii_dpad_pressed_two_directions,
 					ButtonType.N3DS_DPAD_UP, ButtonType.N3DS_DPAD_DOWN,
 					ButtonType.N3DS_DPAD_LEFT, ButtonType.N3DS_DPAD_RIGHT));
 		}
-		if (mPreferences.getBoolean("buttonToggle3ds14", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds12", true)) {
 			overlayJoysticks.add(initializeOverlayJoystick(getContext(), R.drawable.gcwii_joystick_range,
 					R.drawable.gcwii_joystick, R.drawable.gcwii_joystick_pressed, ButtonType.N3DS_STICK_LEFT));
 		}
-		if (mPreferences.getBoolean("buttonToggle3ds15", true)) {
+		if (mPreferences.getBoolean("buttonToggle3ds13", true)) {
             overlayJoysticks.add(initializeOverlayJoystick(getContext(), R.drawable.gcwii_joystick_range,
                     R.drawable.gcpad_c, R.drawable.gcpad_c_pressed, ButtonType.N3DS_STICK_C));
 		}

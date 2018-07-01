@@ -613,7 +613,9 @@ public final class EmulationActivity extends AppCompatActivity
 		boolean[] enabledButtons = new boolean[14];
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.emulation_toggle_controls);
-		if (sIsGameCubeGame || mPreferences.getInt("wiiController", 3) == 0) {
+
+		// TODO : remove this...
+		/*if (sIsGameCubeGame || mPreferences.getInt("wiiController", 3) == 0) {
 			for (int i = 0; i < enabledButtons.length; i++) {
 				enabledButtons[i] = mPreferences.getBoolean("buttonToggleGc" + i, true);
 			}
@@ -636,7 +638,16 @@ public final class EmulationActivity extends AppCompatActivity
 				builder.setMultiChoiceItems(R.array.wiimoteButtons, enabledButtons,
 						(dialog, indexSelected, isChecked) -> editor.putBoolean("buttonToggleWii" + indexSelected, isChecked));
 			}
+		}*/
+
+		for (int i = 0; i < enabledButtons.length; i++) {
+			enabledButtons[i] = mPreferences.getBoolean("buttonToggle3ds" + i, true);
 		}
+		builder.setMultiChoiceItems(R.array.n3dsButtons, enabledButtons,
+				(dialog, indexSelected, isChecked) -> editor.putBoolean("buttonToggle3ds" + indexSelected, isChecked));
+
+
+
 		builder.setNeutralButton(getString(R.string.emulation_toggle_all), (dialogInterface, i) -> mEmulationFragment.toggleInputOverlayVisibility());
 		builder.setPositiveButton(getString(R.string.ok), (dialogInterface, i) ->
 		{
