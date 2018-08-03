@@ -414,6 +414,9 @@ public final class NativeLibrary
 	 */
 	public static native void RefreshWiimotes();
 
+	/** Returns the performance stats for the current game **/
+	public static native double[] GetPerfStats();
+
 	/**
 	 * The methods C++ uses to find references to Java classes and methods
 	 * are really expensive. Rather than calling them every time we want to

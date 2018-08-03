@@ -97,6 +97,11 @@
     </item>
 
     <item
+        android:id="@+id/menu_emulation_toggle_perf_stats"
+        app:showAsAction="never"
+        android:title="@string/emulation_toggle_perf_stats"/>
+
+    <item
         android:id="@+id/menu_change_disc"
         app:showAsAction="never"
         android:title="@string/emulation_change_disc"/>

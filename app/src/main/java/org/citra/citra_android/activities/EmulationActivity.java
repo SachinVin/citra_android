@@ -94,7 +94,7 @@ public final class EmulationActivity extends AppCompatActivity
 			MENU_ACTION_SAVE_SLOT3, MENU_ACTION_SAVE_SLOT4, MENU_ACTION_SAVE_SLOT5,
 			MENU_ACTION_SAVE_SLOT6, MENU_ACTION_LOAD_SLOT1, MENU_ACTION_LOAD_SLOT2,
 			MENU_ACTION_LOAD_SLOT3, MENU_ACTION_LOAD_SLOT4, MENU_ACTION_LOAD_SLOT5,
-			MENU_ACTION_LOAD_SLOT6, MENU_ACTION_EXIT, MENU_ACTION_CHANGE_DISC})
+			MENU_ACTION_LOAD_SLOT6, MENU_ACTION_EXIT, MENU_ACTION_CHANGE_DISC, MENU_ACTION_TOGGLE_PREF_STATS})
 	public @interface MenuAction {
 	}
 
@@ -122,6 +122,7 @@ public final class EmulationActivity extends AppCompatActivity
 	public static final int MENU_ACTION_LOAD_SLOT6 = 21;
 	public static final int MENU_ACTION_EXIT = 22;
 	public static final int MENU_ACTION_CHANGE_DISC = 23;
+	public static final int MENU_ACTION_TOGGLE_PREF_STATS = 24;
 
 
 	private static SparseIntArray buttonsActionsMap = new SparseIntArray();
@@ -132,6 +133,7 @@ public final class EmulationActivity extends AppCompatActivity
 		buttonsActionsMap.append(R.id.menu_emulation_choose_controller, EmulationActivity.MENU_ACTION_CHOOSE_CONTROLLER);
 		buttonsActionsMap.append(R.id.menu_refresh_wiimotes, EmulationActivity.MENU_ACTION_REFRESH_WIIMOTES);
 		buttonsActionsMap.append(R.id.menu_emulation_screenshot, EmulationActivity.MENU_ACTION_TAKE_SCREENSHOT);
+		buttonsActionsMap.append(R.id.menu_emulation_toggle_perf_stats, EmulationActivity.MENU_ACTION_TOGGLE_PREF_STATS);
 
 		buttonsActionsMap.append(R.id.menu_quicksave, EmulationActivity.MENU_ACTION_QUICK_SAVE);
 		buttonsActionsMap.append(R.id.menu_quickload, EmulationActivity.MENU_ACTION_QUICK_LOAD);
@@ -547,6 +549,11 @@ public final class EmulationActivity extends AppCompatActivity
 
 			case MENU_ACTION_LOAD_SLOT6:
 				NativeLibrary.LoadState(5);
+				return;
+
+			// Toggle the visibility of the Performance stats TextView
+			case MENU_ACTION_TOGGLE_PREF_STATS:
+				mEmulationFragment.togglePerfStatsVisibility();
 				return;
 
 			case MENU_ACTION_CHANGE_DISC:

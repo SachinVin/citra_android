@@ -21,6 +21,17 @@
         android:focusable="true"
         android:focusableInTouchMode="true"/>
 
+    <TextView
+        android:id="@+id/perf_stats_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:linksClickable="false"
+        android:longClickable="false"
+        android:shadowColor="@android:color/black"
+        android:text="TextView"
+        android:textColor="@android:color/white" />
+
     <Button
         android:id="@+id/done_control_config"
         android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -14,6 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.citra.citra_android.NativeLibrary;
@@ -27,11 +29,11 @@ import org.citra.citra_android.utils.Log;
 
 import java.io.File;
 
-import rx.functions.Action1;
-
 public final class EmulationFragment extends Fragment implements SurfaceHolder.Callback
 {
 	private static final String KEY_GAMEPATH = "gamepath";
+
+	private static final Handler perfStatsUpdateHandler =  new Handler();
 
 	private SharedPreferences mPreferences;
 
@@ -42,6 +44,10 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
 	private DirectoryStateReceiver directoryStateReceiver;
 
 	private EmulationActivity activity;
+
+	private TextView mPerfStats;
+
+	private Runnable perfStatsUpdater;
 
 	public static EmulationFragment newInstance(String gamePath)
 	{
@@ -112,6 +118,18 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
 		if (doneButton != null)
 		{
 			doneButton.setOnClickListener(v -> stopConfiguringControls());
+		}
+
+		mPerfStats = contents.findViewById(R.id.perf_stats_text);
+		if(mPerfStats != null)
+		{
+			// If the overlay was previously disabled, then don't show it.
+			if (!mPreferences.getBoolean("showPerfStats", true)) {
+				mPerfStats.setVisibility(View.GONE);
+			}
+			else {
+				updatePerfStats();
+			}
 		}
 
 		// The new Surface created here will get passed to the native code via onSurfaceChanged.
@@ -207,6 +225,51 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
 	public void refreshInputOverlay()
 	{
 		mInputOverlay.refreshControls();
+	}
+
+	public void togglePerfStatsVisibility()
+	{
+		SharedPreferences.Editor editor = mPreferences.edit();
+
+		// If the overlay is currently set to INVISIBLE
+		if (!mPreferences.getBoolean("showPerfStats", false))
+		{
+			updatePerfStats();
+			// Set it to VISIBLE
+			mPerfStats.setVisibility(View.VISIBLE);
+			editor.putBoolean("showPerfStats", true);
+		}
+		else
+		{
+			stopPerfStatsUpdates();
+			// Set it to INVISIBLE
+			mPerfStats.setVisibility(View.GONE);
+			editor.putBoolean("showPerfStats", false);
+		}
+
+		editor.apply();
+	}
+
+	private void updatePerfStats() {
+		final int SYSTEM_FPS = 0;
+		final int FPS = 1;
+		final int FRAMETIME = 2;
+		final int SPEED = 3;
+
+		perfStatsUpdater = () -> {
+			double perfStats[] = NativeLibrary.GetPerfStats();
+			mPerfStats.setText(String.format("FPS: %.5s\nFrametime: %.7sms\nSpeed: %.4s%%", perfStats[FPS],
+					perfStats[FRAMETIME] * 1000.0, perfStats[SPEED] * 100.0));
+
+			perfStatsUpdateHandler.postDelayed(perfStatsUpdater,3000 /* 3s */);
+		};
+		perfStatsUpdateHandler.post(perfStatsUpdater);
+	}
+
+	private void stopPerfStatsUpdates() {
+		if (perfStatsUpdater != null) {
+			perfStatsUpdateHandler.removeCallbacks(perfStatsUpdater);
+		}
 	}
 
 	@Override
