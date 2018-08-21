@@ -252,6 +252,23 @@ public final class NativeLibrary
 	 */
 	public static native void onGamePadMoveEvent(String Device, int Axis, float x_axis, float y_axis);
 
+	/**
+	 * Handles touch events.
+	 *
+	 * @param x_axis  The value of the x-axis.
+	 * @param y_axis  The value of the y-axis
+	 * @param pressed To identify if the touch held down or released.
+	 */
+	public static native void onTouchEvent(float x_axis, float y_axis, boolean pressed);
+
+	/**
+	 * Handles touch movement.
+	 *
+	 * @param x_axis  The value of the instantaneous x-axis.
+	 * @param y_axis  The value of the instantaneous y-axis.
+	 */
+	public static native void onTouchMoved(float x_axis, float y_axis);
+
 	public static native String GetUserSetting(String gameID, String Section, String Key);
 
 	public static native void SetUserSetting(String gameID, String Section, String Key, String Value);

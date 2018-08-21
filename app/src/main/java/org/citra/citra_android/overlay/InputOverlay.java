@@ -125,6 +125,25 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
 
 		int pointerIndex = event.getActionIndex();
 
+		if(mPreferences.getBoolean("isTouchEnabled", true)){
+			switch (event.getAction())
+			{
+				case MotionEvent.ACTION_DOWN:
+				case MotionEvent.ACTION_POINTER_DOWN:
+					NativeLibrary.onTouchEvent(event.getX(pointerIndex), event.getY(pointerIndex), true);
+					break;
+				case MotionEvent.ACTION_MOVE:
+					NativeLibrary.onTouchMoved(event.getX(), event.getY());
+					break;
+				case MotionEvent.ACTION_UP:
+				case MotionEvent.ACTION_POINTER_UP:
+					// We dont really care where the touch has been released. We only care whether it has been
+					// released or not.
+					NativeLibrary.onTouchEvent(0,0, false);
+					break;
+			}
+		}
+
 		for (InputOverlayDrawableButton button : overlayButtons)
 		{
 			// Determine the button state to apply based on the MotionEvent action flag.
