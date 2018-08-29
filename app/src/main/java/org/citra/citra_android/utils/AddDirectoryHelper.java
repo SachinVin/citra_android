@@ -10,35 +10,35 @@ import org.citra.citra_android.model.GameProvider;
 
 public class AddDirectoryHelper
 {
-    private Context mContext;
+  private Context mContext;
 
-    public interface AddDirectoryListener
+  public interface AddDirectoryListener
+  {
+    void onDirectoryAdded();
+  }
+
+  public AddDirectoryHelper(Context context)
+  {
+    this.mContext = context;
+  }
+
+  public void addDirectory(String dir, AddDirectoryListener addDirectoryListener)
+  {
+    AsyncQueryHandler handler = new AsyncQueryHandler(mContext.getContentResolver())
     {
-        void onDirectoryAdded();
-    }
+      @Override
+      protected void onInsertComplete(int token, Object cookie, Uri uri)
+      {
+        addDirectoryListener.onDirectoryAdded();
+      }
+    };
 
-    public AddDirectoryHelper(Context context)
-    {
-        this.mContext = context;
-    }
+    ContentValues file = new ContentValues();
+    file.put(GameDatabase.KEY_FOLDER_PATH, dir);
 
-    public void addDirectory(String dir, AddDirectoryListener addDirectoryListener)
-    {
-        AsyncQueryHandler handler = new AsyncQueryHandler(mContext.getContentResolver())
-        {
-            @Override
-            protected void onInsertComplete(int token, Object cookie, Uri uri)
-            {
-                addDirectoryListener.onDirectoryAdded();
-            }
-        };
-
-        ContentValues file = new ContentValues();
-        file.put(GameDatabase.KEY_FOLDER_PATH, dir);
-
-        handler.startInsert(0,                // We don't need to identify this call to the handler
-                null,                        // We don't need to pass additional data to the handler
-                GameProvider.URI_FOLDER,    // Tell the GameProvider we are adding a folder
-                file);
-    }
+    handler.startInsert(0,                // We don't need to identify this call to the handler
+            null,                        // We don't need to pass additional data to the handler
+            GameProvider.URI_FOLDER,    // Tell the GameProvider we are adding a folder
+            file);
+  }
 }

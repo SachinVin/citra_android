@@ -13,18 +13,18 @@ import org.citra.citra_android.R;
  */
 public class FileViewHolder extends RecyclerView.ViewHolder
 {
-	public View itemView;
+  public View itemView;
 
-	public TextView textFileName;
-	public ImageView imageType;
+  public TextView textFileName;
+  public ImageView imageType;
 
-	public FileViewHolder(View itemView)
-	{
-		super(itemView);
+  public FileViewHolder(View itemView)
+  {
+    super(itemView);
 
-		this.itemView = itemView;
+    this.itemView = itemView;
 
-		textFileName = itemView.findViewById(R.id.text_file_name);
-		imageType = itemView.findViewById(R.id.image_type);
-	}
+    textFileName = itemView.findViewById(R.id.text_file_name);
+    imageType = itemView.findViewById(R.id.image_type);
+  }
 }

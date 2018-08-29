@@ -2,27 +2,27 @@ package org.citra.citra_android.model.settings;
 
 public final class BooleanSetting extends Setting
 {
-	private boolean mValue;
+  private boolean mValue;
 
-	public BooleanSetting(String key, String section, int file, boolean value)
-	{
-		super(key, section, file);
-		mValue = value;
-	}
+  public BooleanSetting(String key, String section, int file, boolean value)
+  {
+    super(key, section, file);
+    mValue = value;
+  }
 
-	public boolean getValue()
-	{
-		return mValue;
-	}
+  public boolean getValue()
+  {
+    return mValue;
+  }
 
-	public void setValue(boolean value)
-	{
-		mValue = value;
-	}
+  public void setValue(boolean value)
+  {
+    mValue = value;
+  }
 
-	@Override
-	public String getValueAsString()
-	{
-		return mValue ? "True" : "False";
-	}
+  @Override
+  public String getValueAsString()
+  {
+    return mValue ? "True" : "False";
+  }
 }

@@ -11,27 +11,27 @@ import android.widget.ImageView;
  */
 public final class TvGameViewHolder extends Presenter.ViewHolder
 {
-	public ImageCardView cardParent;
+  public ImageCardView cardParent;
 
-	public ImageView imageScreenshot;
+  public ImageView imageScreenshot;
 
-	public String gameId;
+  public String gameId;
 
-	// TODO Not need any of this stuff. Currently only the properties dialog needs it.
-	public String path;
-	public String title;
-	public String description;
-	public int country;
-	public String company;
-	public String screenshotPath;
+  // TODO Not need any of this stuff. Currently only the properties dialog needs it.
+  public String path;
+  public String title;
+  public String description;
+  public int country;
+  public String company;
+  public String screenshotPath;
 
-	public TvGameViewHolder(View itemView)
-	{
-		super(itemView);
+  public TvGameViewHolder(View itemView)
+  {
+    super(itemView);
 
-		itemView.setTag(this);
+    itemView.setTag(this);
 
-		cardParent = (ImageCardView) itemView;
-		imageScreenshot = cardParent.getMainImageView();
-	}
+    cardParent = (ImageCardView) itemView;
+    imageScreenshot = cardParent.getMainImageView();
+  }
 }

@@ -8,16 +8,16 @@ import org.citra.citra_android.utils.PermissionsHandler;
 
 public class DolphinApplication extends Application
 {
-	public static GameDatabase databaseHelper;
+  public static GameDatabase databaseHelper;
 
-	@Override
-	public void onCreate()
-	{
-		super.onCreate();
+  @Override
+  public void onCreate()
+  {
+    super.onCreate();
 
-		if (PermissionsHandler.hasWriteAccess(getApplicationContext()))
-			DirectoryInitializationService.startService(getApplicationContext());
+    if (PermissionsHandler.hasWriteAccess(getApplicationContext()))
+      DirectoryInitializationService.startService(getApplicationContext());
 
-		databaseHelper = new GameDatabase(this);
-	}
+    databaseHelper = new GameDatabase(this);
+  }
 }

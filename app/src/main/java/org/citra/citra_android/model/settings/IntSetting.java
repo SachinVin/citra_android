@@ -2,27 +2,27 @@ package org.citra.citra_android.model.settings;
 
 public final class IntSetting extends Setting
 {
-	private int mValue;
+  private int mValue;
 
-	public IntSetting(String key, String section, int file, int value)
-	{
-		super(key, section, file);
-		mValue = value;
-	}
+  public IntSetting(String key, String section, int file, int value)
+  {
+    super(key, section, file);
+    mValue = value;
+  }
 
-	public int getValue()
-	{
-		return mValue;
-	}
+  public int getValue()
+  {
+    return mValue;
+  }
 
-	public void setValue(int value)
-	{
-		mValue = value;
-	}
+  public void setValue(int value)
+  {
+    mValue = value;
+  }
 
-	@Override
-	public String getValueAsString()
-	{
-		return Integer.toString(mValue);
-	}
+  @Override
+  public String getValueAsString()
+  {
+    return Integer.toString(mValue);
+  }
 }
