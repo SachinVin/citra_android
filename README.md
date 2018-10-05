@@ -13,7 +13,7 @@ You can follow [this guide](https://github.com/dolphin-emu/dolphin/blob/master/A
 
 First, for the frontend, you can clone/download this repo.
 
-You can find the Citra backend [here](https://github.com/SachinVin/citra) - either download a snapshot archive from GitHub or clone the repository.
+You can find the Citra backend [here](https://github.com/citra-emu/citra) - either download a snapshot archive from GitHub or clone the repository.
 
 Edit the CMakeLists path in the build.gradle to point to the location of the CMakeLists.txt of the Citra backend.
 
