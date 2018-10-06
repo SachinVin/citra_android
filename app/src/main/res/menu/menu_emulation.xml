@@ -3,6 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       tools:context="org.citra.citra_android.activities.EmulationActivity">
 
+    <!-- TODO : Bring back once we have save states in Citra
     <item
         android:id="@+id/menu_emulation_screenshot"
         android:showAsAction="ifRoom"
@@ -20,8 +21,10 @@
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_quickload"
         android:title="@string/emulation_quickload"/>
+-->
 
     <!-- Save State Slots -->
+<!--
     <item
         android:id="@+id/menu_emulation_save_root"
         android:showAsAction="never"
@@ -48,8 +51,10 @@
                 android:title="@string/emulation_slot5"/>
         </menu>
     </item>
+-->
 
     <!-- Load State Slots -->
+<!--
     <item
         android:id="@+id/menu_emulation_load_root"
         android:showAsAction="never"
@@ -76,10 +81,10 @@
                 android:title="@string/emulation_slot5"/>
         </menu>
     </item>
+-->
 
     <item
         android:id="@+id/menu_emulation_configure_controls"
-        android:showAsAction="never"
         android:title="@string/emulation_configure_controls">
         <menu>
             <item

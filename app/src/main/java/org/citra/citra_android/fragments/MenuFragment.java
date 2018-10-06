@@ -21,16 +21,12 @@ public final class MenuFragment extends Fragment implements View.OnClickListener
 
   static
   {
-    buttonsActionsMap
-            .append(R.id.menu_take_screenshot, EmulationActivity.MENU_ACTION_TAKE_SCREENSHOT);
     buttonsActionsMap.append(R.id.menu_quicksave, EmulationActivity.MENU_ACTION_QUICK_SAVE);
     buttonsActionsMap.append(R.id.menu_quickload, EmulationActivity.MENU_ACTION_QUICK_LOAD);
     buttonsActionsMap
             .append(R.id.menu_emulation_save_root, EmulationActivity.MENU_ACTION_SAVE_ROOT);
     buttonsActionsMap
             .append(R.id.menu_emulation_load_root, EmulationActivity.MENU_ACTION_LOAD_ROOT);
-    buttonsActionsMap
-            .append(R.id.menu_refresh_wiimotes, EmulationActivity.MENU_ACTION_REFRESH_WIIMOTES);
     buttonsActionsMap.append(R.id.menu_emulation_toggle_perf_stats,
             EmulationActivity.MENU_ACTION_TOGGLE_PREF_STATS);
     buttonsActionsMap.append(R.id.menu_change_disc, EmulationActivity.MENU_ACTION_CHANGE_DISC);

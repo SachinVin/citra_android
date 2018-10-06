@@ -87,7 +87,6 @@ public final class EmulationActivity extends AppCompatActivity
 
   @Retention(SOURCE)
   @IntDef({MENU_ACTION_EDIT_CONTROLS_PLACEMENT, MENU_ACTION_TOGGLE_CONTROLS, MENU_ACTION_ADJUST_SCALE,
-          MENU_ACTION_CHOOSE_CONTROLLER, MENU_ACTION_REFRESH_WIIMOTES, MENU_ACTION_TAKE_SCREENSHOT,
           MENU_ACTION_QUICK_SAVE, MENU_ACTION_QUICK_LOAD, MENU_ACTION_SAVE_ROOT,
           MENU_ACTION_LOAD_ROOT, MENU_ACTION_SAVE_SLOT1, MENU_ACTION_SAVE_SLOT2,
           MENU_ACTION_SAVE_SLOT3, MENU_ACTION_SAVE_SLOT4, MENU_ACTION_SAVE_SLOT5,
@@ -135,15 +134,9 @@ public final class EmulationActivity extends AppCompatActivity
             EmulationActivity.MENU_ACTION_TOGGLE_CONTROLS);
     buttonsActionsMap
             .append(R.id.menu_emulation_adjust_scale, EmulationActivity.MENU_ACTION_ADJUST_SCALE);
-    buttonsActionsMap.append(R.id.menu_emulation_choose_controller,
-            EmulationActivity.MENU_ACTION_CHOOSE_CONTROLLER);
-    buttonsActionsMap
-            .append(R.id.menu_refresh_wiimotes, EmulationActivity.MENU_ACTION_REFRESH_WIIMOTES);
-    buttonsActionsMap
-            .append(R.id.menu_emulation_screenshot, EmulationActivity.MENU_ACTION_TAKE_SCREENSHOT);
+
     buttonsActionsMap.append(R.id.menu_emulation_toggle_perf_stats,
             EmulationActivity.MENU_ACTION_TOGGLE_PREF_STATS);
-
     buttonsActionsMap.append(R.id.menu_quicksave, EmulationActivity.MENU_ACTION_QUICK_SAVE);
     buttonsActionsMap.append(R.id.menu_quickload, EmulationActivity.MENU_ACTION_QUICK_LOAD);
     buttonsActionsMap
@@ -334,7 +327,6 @@ public final class EmulationActivity extends AppCompatActivity
       mEmulationFragment.stopEmulation();
       exitWithAnimation();
     }
-
   }
 
   @Override
@@ -480,21 +472,6 @@ public final class EmulationActivity extends AppCompatActivity
       case MENU_ACTION_ADJUST_SCALE:
         adjustScale();
         return;
-
-      // (Wii games only) Change the controller for the input overlay.
-      case MENU_ACTION_CHOOSE_CONTROLLER:
-        chooseController();
-        return;
-
-      case MENU_ACTION_REFRESH_WIIMOTES:
-        NativeLibrary.RefreshWiimotes();
-        return;
-
-      // Screenshot capturing
-      case MENU_ACTION_TAKE_SCREENSHOT:
-        NativeLibrary.SaveScreenShot();
-        return;
-
       // Quick save / load
       case MENU_ACTION_QUICK_SAVE:
         NativeLibrary.SaveState(9, false);
