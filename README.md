@@ -27,6 +27,9 @@ You're all set, now hit build.
   * A processor with support for either ARMv8 or x86-64; 32-bit processors (ARMv7, x86) are not supported by Citra.
 * Graphics
   * A graphics processor that supports OpenGL ES 3.2 or higher.
+* 3ds user folder
+  * this fixes the black screen issue
+  
     
 ### Known Issues
 Since this is in very early stages of development a lot of things don't quite work properly yet:
