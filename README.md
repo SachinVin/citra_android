@@ -10,6 +10,7 @@ Since this code is almost entirely a copy of the Dolphin frontend,there are a lo
 
 ### Building
 You can follow [this guide](https://github.com/dolphin-emu/dolphin/blob/master/AndroidSetup.md) if haven't set up your Android environment.
+Once that is done, follow [this](https://developer.android.com/studio/projects/add-native-code#vanilla_cmake) to setup and use Cmake 3.8(min. for Citra) or higher.
 
 First, for the frontend, you can clone/download this repo.
 
