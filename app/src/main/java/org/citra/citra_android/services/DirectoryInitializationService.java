@@ -70,8 +70,8 @@ public final class DirectoryInitializationService extends IntentService
         if (setDolphinUserDirectory())
         {
           initializeInternalStorage();
-          initializeExternalStorage();
-
+          CreateUserDirectories();
+          NativeLibrary.CreateConfigFile();
           directoryState = DirectoryInitializationState.DOLPHIN_DIRECTORIES_INITIALIZED;
         }
         else
@@ -96,9 +96,9 @@ public final class DirectoryInitializationService extends IntentService
       File externalPath = Environment.getExternalStorageDirectory();
       if (externalPath != null)
       {
-        userPath = externalPath.getAbsolutePath() + "/dolphin-emu";
+        userPath = externalPath.getAbsolutePath() + "/citra-emu";
         Log.debug("[DirectoryInitializationService] User Dir: " + userPath);
-        NativeLibrary.SetUserDirectory(userPath);
+        // NativeLibrary.SetUserDirectory(userPath);
         return true;
       }
 
@@ -127,25 +127,6 @@ public final class DirectoryInitializationService extends IntentService
 
     // Let the native code know where the Sys directory is.
     SetSysDirectory(sysDirectory.getPath());
-  }
-
-  private void initializeExternalStorage()
-  {
-    // Create User directory structure and copy some NAND files from the extracted Sys directory.
-    CreateUserDirectories();
-
-    // GCPadNew.ini and WiimoteNew.ini must contain specific values in order for controller
-    // input to work as intended (they aren't user configurable), so we overwrite them just
-    // in case the user has tried to modify them manually.
-    //
-    // ...Except WiimoteNew.ini contains the user configurable settings for Wii Remote
-    // extensions in addition to all of its lines that aren't user configurable, so since we
-    // don't want to lose the selected extensions, we don't overwrite that file if it exists.
-    //
-    // TODO: Redo the Android controller system so that we don't have to extract these INIs.
-    String configDirectory = NativeLibrary.GetUserDirectory() + File.separator + "Config";
-    copyAsset("GCPadNew.ini", new File(configDirectory, "GCPadNew.ini"), true);
-    copyAsset("WiimoteNew.ini", new File(configDirectory, "WiimoteNew.ini"), false);
   }
 
   private static void deleteDirectoryRecursively(File file)

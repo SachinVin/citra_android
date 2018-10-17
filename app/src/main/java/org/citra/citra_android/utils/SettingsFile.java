@@ -2,7 +2,6 @@ package org.citra.citra_android.utils;
 
 import android.support.annotation.NonNull;
 
-import org.citra.citra_android.model.settings.BooleanSetting;
 import org.citra.citra_android.model.settings.FloatSetting;
 import org.citra.citra_android.model.settings.IntSetting;
 import org.citra.citra_android.model.settings.Setting;
@@ -10,17 +9,15 @@ import org.citra.citra_android.model.settings.SettingSection;
 import org.citra.citra_android.model.settings.StringSetting;
 import org.citra.citra_android.services.DirectoryInitializationService;
 import org.citra.citra_android.ui.settings.SettingsActivityView;
+import org.ini4j.Wini;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * A HashMap<String, SettingSection> that constructs a new SettingSection instead of returning null
@@ -54,62 +51,60 @@ final class SettingsSectionMap extends HashMap<String, SettingSection>
 public final class SettingsFile
 {
   public static final int SETTINGS_DOLPHIN = 0;
-  public static final int SETTINGS_GFX = 1;
-  public static final int SETTINGS_WIIMOTE = 2;
 
-  public static final String FILE_NAME_DOLPHIN = "Dolphin";
-  public static final String FILE_NAME_GFX = "GFX";
-  public static final String FILE_NAME_GCPAD = "GCPadNew";
-  public static final String FILE_NAME_WIIMOTE = "WiimoteNew";
+  public static final String FILE_NAME_CONFIG = "config";
 
+  public static final String SECTION_CONTROLS = "Controls";
   public static final String SECTION_CORE = "Core";
+  public static final String SECTION_RENDERER = "Renderer";
+  public static final String SECTION_LAYOUT = "Layout";
+  public static final String SECTION_AUDIO = "Audio";
+  public static final String SECTION_SYSTEM = "System";
+  public static final String SECTION_CAMERA = "Camera";
+  public static final String SECTION_MISC = "Miscellaneous";
+  public static final String SECTION_DEBUGGING = "Debugging";
+  public static final String SECTION_WEBSERVICE = "WebService";
 
-  public static final String SECTION_GFX_SETTINGS = "Settings";
-  public static final String SECTION_GFX_ENHANCEMENTS = "Enhancements";
-  public static final String SECTION_GFX_HACKS = "Hacks";
+  public static final String KEY_CPU_JIT = "use_cpu_jit";
 
-  public static final String SECTION_STEREOSCOPY = "Stereoscopy";
+  public static final String KEY_HW_RENDERER = "use_hw_renderer";
+  public static final String KEY_HW_SHADER = "use_hw_shader";
+  public static final String KEY_SHADERS_ACCURATE_MUL = "shaders_accurate_mul";
+  public static final String KEY_SHADERS_ACCURATE_GS = "shaders_accurate_gs";
+  public static final String KEY_USE_SHADER_JIT = "use_shader_jit";
+  public static final String KEY_USE_VSYNC = "use_vsync";
+  public static final String KEY_RESOLUTION_FACTOR = "resolution_factor";
+  public static final String KEY_FRAME_LIMIT_ENABLED = "use_frame_limit";
+  public static final String KEY_FRAME_LIMIT = "frame_limit";
+  public static final String KEY_BACKGROUND_RED = "bg_red";
+  public static final String KEY_BACKGROUND_BLUE = "bg_blue";
+  public static final String KEY_BACKGROUND_GREEN = "bg_green";
+  public static final String KEY_STEREOSCOPY = "toggle_3d";
+  public static final String KEY_FACTOR_3D = "factor_3d";
 
-  public static final String SECTION_WIIMOTE = "Wiimote";
+  public static final String KEY_LAYOUT_OPTION = "layout_option";
+  public static final String KEY_SWAP_SCREEN = "swap_screen";
 
-  public static final String SECTION_BINDINGS = "Android";
+  public static final String KEY_AUDIO_OUTPUT_ENGINE = "output_engine";
+  public static final String KEY_ENABLE_AUDIO_STRETCHING = "enable_audio_stretching";
+  public static final String KEY_VOLUME = "volume";
 
-  public static final String KEY_CPU_CORE = "CPUCore";
-  public static final String KEY_DUAL_CORE = "CPUThread";
-  public static final String KEY_OVERCLOCK_ENABLE = "OverclockEnable";
-  public static final String KEY_OVERCLOCK_PERCENT = "Overclock";
-  public static final String KEY_VIDEO_BACKEND = "GFXBackend";
-  public static final String KEY_AUDIO_STRETCH = "AudioStretch";
-  public static final String KEY_SLOT_A_DEVICE = "SlotA";
-  public static final String KEY_SLOT_B_DEVICE = "SlotB";
+  public static final String KEY_USE_VIRTUAL_SD = "use_virtual_sd";
 
-  public static final String KEY_SHOW_FPS = "ShowFPS";
-  public static final String KEY_INTERNAL_RES = "InternalResolution";
-  public static final String KEY_FSAA = "MSAA";
-  public static final String KEY_ANISOTROPY = "MaxAnisotropy";
-  public static final String KEY_POST_SHADER = "PostProcessingShader";
-  public static final String KEY_SCALED_EFB = "EFBScaledCopy";
-  public static final String KEY_PER_PIXEL = "EnablePixelLighting";
-  public static final String KEY_FORCE_FILTERING = "ForceFiltering";
-  public static final String KEY_DISABLE_FOG = "DisableFog";
-  public static final String KEY_DISABLE_COPY_FILTER = "DisableCopyFilter";
+  public static final String KEY_IS_NEW_3DS = "is_new_3ds";
+  public static final String KEY_REGION_VALUE = "region_value";
+  public static final String KEY_INIT_CLOCK = "init_clock";
+  public static final String KEY_INIT_TIME = "init_time";
 
-  public static final String KEY_STEREO_MODE = "StereoMode";
-  public static final String KEY_STEREO_DEPTH = "StereoDepth";
-  public static final String KEY_STEREO_CONV = "StereoConvergencePercentage";
-  public static final String KEY_STEREO_SWAP = "StereoSwapEyes";
+  public static final String KEY_CAMERA_OUTER_RIGHT_NAME = "camera_outer_right_name";
+  public static final String KEY_CAMERA_OUTER_RIGHT_CONFIG = "camera_outer_right_config";
+  public static final String KEY_CAMERA_OUTER_RIGHT_FLIP = "camera_outer_right_flip";
+  public static final String KEY_CAMERA_OUTER_LEFT_FLIP = "camera_outer_left_flip";
+  public static final String KEY_CAMERA_INNER_NAME = "camera_inner_name";
+  public static final String KEY_CAMERA_INNER_CONFIG = "camera_inner_config";
+  public static final String KEY_CAMERA_INNER_FLIP = "camera_inner_flip";
 
-  public static final String KEY_SKIP_EFB = "EFBAccessEnable";
-  public static final String KEY_IGNORE_FORMAT = "EFBEmulateFormatChanges";
-  public static final String KEY_EFB_TEXTURE = "EFBToTextureEnable";
-  public static final String KEY_TEXCACHE_ACCURACY = "SafeTextureCacheColorSamples";
-  public static final String KEY_GPU_TEXTURE_DECODING = "EnableGPUTextureDecoding";
-  public static final String KEY_XFB_TEXTURE = "XFBToTextureEnable";
-  public static final String KEY_IMMEDIATE_XFB = "ImmediateXFBEnable";
-  public static final String KEY_FAST_DEPTH = "FastDepthCalc";
-  public static final String KEY_ASPECT_RATIO = "AspectRatio";
-  public static final String KEY_SHADER_COMPILATION_MODE = "ShaderCompilationMode";
-  public static final String KEY_WAIT_FOR_SHADERS = "WaitForShadersBeforeStarting";
+  public static final String KEY_LOG_FILTER = "log_filter";
 
   public static final String KEY_GCPAD_TYPE = "SIDevice";
 
@@ -337,11 +332,6 @@ public final class SettingsFile
       }
     }
 
-    if (fileName.equals(SettingsFile.FILE_NAME_DOLPHIN))
-    {
-      addGcPadSettingsIfTheyDontExist(sections);
-    }
-
     return sections;
   }
 
@@ -359,37 +349,23 @@ public final class SettingsFile
   {
     File ini = getSettingsFile(fileName);
 
-    PrintWriter writer = null;
+    Wini writer = null;
     try
     {
-      writer = new PrintWriter(ini, "UTF-8");
+      writer = new Wini(ini);
 
       Set<String> keySet = sections.keySet();
-      Set<String> sortedKeySet = new TreeSet<>(keySet);
-
-      for (String key : sortedKeySet)
+      for (String key : keySet)
       {
         SettingSection section = sections.get(key);
         writeSection(writer, section);
       }
+      writer.store();
     }
-    catch (FileNotFoundException e)
+    catch (IOException e)
     {
       Log.error("[SettingsFile] File not found: " + fileName + ".ini: " + e.getMessage());
       view.showToastMessage("Error saving " + fileName + ".ini: " + e.getMessage());
-    }
-    catch (UnsupportedEncodingException e)
-    {
-      Log.error("[SettingsFile] Bad encoding; please file a bug report: " + fileName + ".ini: " +
-              e.getMessage());
-      view.showToastMessage("Error saving " + fileName + ".ini: " + e.getMessage());
-    }
-    finally
-    {
-      if (writer != null)
-      {
-        writer.close();
-      }
     }
   }
 
@@ -397,31 +373,13 @@ public final class SettingsFile
   private static File getSettingsFile(String fileName)
   {
     return new File(
-            DirectoryInitializationService.getUserDirectory() + "/Config/" + fileName + ".ini");
+            DirectoryInitializationService.getUserDirectory() + "/config/" + fileName + ".ini");
   }
 
   private static SettingSection sectionFromLine(String line)
   {
     String sectionName = line.substring(1, line.length() - 1);
     return new SettingSection(sectionName);
-  }
-
-  private static void addGcPadSettingsIfTheyDontExist(HashMap<String, SettingSection> sections)
-  {
-    SettingSection coreSection = sections.get(SettingsFile.SECTION_CORE);
-
-    for (int i = 0; i < 4; i++)
-    {
-      String key = SettingsFile.KEY_GCPAD_TYPE + i;
-      if (coreSection.getSetting(key) == null)
-      {
-        Setting gcPadSetting =
-                new IntSetting(key, SettingsFile.SECTION_CORE, SettingsFile.SETTINGS_DOLPHIN, 0);
-        coreSection.putSetting(gcPadSetting);
-      }
-    }
-
-    sections.put(SettingsFile.SECTION_CORE, coreSection);
   }
 
   /**
@@ -446,19 +404,12 @@ public final class SettingsFile
     String key = splitLine[0].trim();
     String value = splitLine[1].trim();
 
-    int file;
-    switch (fileName)
-    {
-      case FILE_NAME_GFX:
-        file = SETTINGS_GFX;
-        break;
-      case FILE_NAME_WIIMOTE:
-        file = SETTINGS_WIIMOTE;
-        break;
-      default:
-        file = SETTINGS_DOLPHIN;
-        break;
+    if(value.isEmpty()){
+      Log.warning("Skipping null value in config line \"" + line + "\"");
+      return null;
     }
+
+    int file = SETTINGS_DOLPHIN;
 
     try
     {
@@ -480,50 +431,28 @@ public final class SettingsFile
     {
     }
 
-    switch (value)
-    {
-      case "True":
-        return new BooleanSetting(key, current.getName(), file, true);
-      case "False":
-        return new BooleanSetting(key, current.getName(), file, false);
-      default:
-        return new StringSetting(key, current.getName(), file, value);
-    }
+    return new StringSetting(key, current.getName(), file, value);
   }
 
   /**
    * Writes the contents of a Section HashMap to disk.
    *
-   * @param writer  A PrintWriter pointed at a file on disk.
+   * @param parser  A Wini pointed at a file on disk.
    * @param section A section containing settings to be written to the file.
    */
-  private static void writeSection(PrintWriter writer, SettingSection section)
+  private static void writeSection(Wini parser, SettingSection section)
   {
     // Write the section header.
-    String header = sectionAsString(section);
-    writer.println(header);
+    String header = section.getName();
 
     // Write this section's values.
     HashMap<String, Setting> settings = section.getSettings();
     Set<String> keySet = settings.keySet();
-    Set<String> sortedKeySet = new TreeSet<>(keySet);
 
-    for (String key : sortedKeySet)
+    for (String key : keySet)
     {
       Setting setting = settings.get(key);
-      String settingString = settingAsString(setting);
-
-      writer.println(settingString);
+      parser.put(header, setting.getKey(), setting.getValueAsString());
     }
-  }
-
-  private static String sectionAsString(SettingSection section)
-  {
-    return "[" + section.getName() + "]";
-  }
-
-  private static String settingAsString(Setting setting)
-  {
-    return setting.getKey() + " = " + setting.getValueAsString();
   }
 }

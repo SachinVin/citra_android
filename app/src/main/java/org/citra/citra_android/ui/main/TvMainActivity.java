@@ -261,18 +261,6 @@ public final class TvMainActivity extends FragmentActivity implements MainView
             R.drawable.ic_settings_core_tv,
             R.string.grid_menu_core_settings));
 
-    rowItems.add(new TvSettingsItem(R.id.menu_settings_video,
-            R.drawable.ic_settings_graphics_tv,
-            R.string.grid_menu_video_settings));
-
-    rowItems.add(new TvSettingsItem(R.id.menu_settings_gcpad,
-            R.drawable.ic_settings_gcpad,
-            R.string.grid_menu_gcpad_settings));
-
-    rowItems.add(new TvSettingsItem(R.id.menu_settings_wiimote,
-            R.drawable.ic_settings_wiimote,
-            R.string.grid_menu_wiimote_settings));
-
     rowItems.add(new TvSettingsItem(R.id.button_add_directory,
             R.drawable.ic_add_tv,
             R.string.add_directory_title));

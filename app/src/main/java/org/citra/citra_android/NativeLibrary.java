@@ -381,6 +381,9 @@ public final class NativeLibrary
    */
   public static native String GetUserDirectory();
 
+  // Create the config.ini file.
+  public static native void CreateConfigFile();
+
   public static native int DefaultCPUCore();
 
   /**

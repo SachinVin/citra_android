@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import org.citra.citra_android.R;
 import org.citra.citra_android.dialogs.MotionAlertDialog;
-import org.citra.citra_android.model.settings.BooleanSetting;
 import org.citra.citra_android.model.settings.FloatSetting;
 import org.citra.citra_android.model.settings.IntSetting;
 import org.citra.citra_android.model.settings.StringSetting;
@@ -131,17 +130,12 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 
 	public void onBooleanClick(CheckBoxSetting item, int position, boolean checked)
 	{
-		BooleanSetting setting = item.setChecked(checked);
+		IntSetting setting = item.setChecked(checked);
 		notifyItemChanged(position);
 
 		if (setting != null)
 		{
 			mView.putSetting(setting);
-		}
-
-		if (item.getKey().equals(SettingsFile.KEY_SKIP_EFB) || item.getKey().equals(SettingsFile.KEY_IGNORE_FORMAT))
-		{
-			mView.putSetting(new BooleanSetting(item.getKey(), item.getSection(), item.getFile(), !checked));
 		}
 
 		mView.onSettingChanged();
@@ -256,17 +250,6 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 			{
 				mView.putSetting(setting);
 			}
-			else
-			{
-				if (scSetting.getKey().equals(SettingsFile.KEY_VIDEO_BACKEND_INDEX))
-				{
-					putVideoBackendSetting(which);
-				}
-				else if (scSetting.getKey().equals(SettingsFile.KEY_WIIMOTE_EXTENSION))
-				{
-					putExtensionSetting(which, Character.getNumericValue(scSetting.getSection().charAt(scSetting.getSection().length() - 1)));
-				}
-			}
 
 			closeDialog();
 		}
@@ -277,7 +260,7 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 			{
 				float value;
 
-				if (sliderSetting.getKey().equals(SettingsFile.KEY_OVERCLOCK_PERCENT))
+				if (sliderSetting.getKey().equals(SettingsFile.KEY_FRAME_LIMIT))
 				{
 					value = mSeekbarProgress / 100.0f;
 				}
@@ -371,37 +354,5 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 		}
 
 		return -1;
-	}
-
-	public void putVideoBackendSetting(int which)
-	{
-		StringSetting gfxBackend = null;
-		switch (which)
-		{
-			case 0:
-				gfxBackend = new StringSetting(SettingsFile.KEY_VIDEO_BACKEND, SettingsFile.SECTION_CORE, SettingsFile.SETTINGS_DOLPHIN, "OGL");
-				break;
-
-			case 1:
-				gfxBackend = new StringSetting(SettingsFile.KEY_VIDEO_BACKEND, SettingsFile.SECTION_CORE, SettingsFile.SETTINGS_DOLPHIN, "Vulkan");
-				break;
-
-			case 2:
-				gfxBackend = new StringSetting(SettingsFile.KEY_VIDEO_BACKEND, SettingsFile.SECTION_CORE, SettingsFile.SETTINGS_DOLPHIN, "Software Renderer");
-				break;
-
-			case 3:
-				gfxBackend = new StringSetting(SettingsFile.KEY_VIDEO_BACKEND, SettingsFile.SECTION_CORE, SettingsFile.SETTINGS_DOLPHIN, "Null");
-				break;
-		}
-
-		mView.putSetting(gfxBackend);
-	}
-
-	public void putExtensionSetting(int which, int wiimoteNumber)
-	{
-		StringSetting extension = new StringSetting(SettingsFile.KEY_WIIMOTE_EXTENSION, SettingsFile.SECTION_WIIMOTE + wiimoteNumber,
-				SettingsFile.SETTINGS_WIIMOTE, mContext.getResources().getStringArray(R.array.wiimoteExtensionsEntries)[which]);
-		mView.putSetting(extension);
 	}
 }

@@ -102,9 +102,6 @@ public final class SettingsFragment extends Fragment implements SettingsFragment
 
 		ArrayList<HashMap<String, SettingSection>> settings = new ArrayList<>();
 		settings.add(SettingsFile.SETTINGS_DOLPHIN, activity.getSettings(SettingsFile.SETTINGS_DOLPHIN));
-		settings.add(SettingsFile.SETTINGS_GFX, activity.getSettings(SettingsFile.SETTINGS_GFX));
-		settings.add(SettingsFile.SETTINGS_WIIMOTE, activity.getSettings(SettingsFile.SETTINGS_WIIMOTE));
-
 		mPresenter.onViewCreated(settings);
 	}
 

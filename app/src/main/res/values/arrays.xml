@@ -179,6 +179,27 @@
         <item>3</item>
     </integer-array>
 
+    <string-array name="regionNames">
+        <item>Auto-select</item>
+        <item>Japan</item>
+        <item>USA</item>
+        <item> Europe</item>
+        <item>Australia</item>
+        <item>China</item>
+        <item>Korea</item>
+        <item>Taiwan</item>
+    </string-array>
+    <integer-array name="regionValues">
+        <item>-1</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
+
     <string-array name="countryNames">
         <item>Europe</item>
         <item>Japan</item>

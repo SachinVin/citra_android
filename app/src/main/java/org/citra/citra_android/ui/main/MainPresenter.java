@@ -41,19 +41,7 @@ public final class MainPresenter
     switch (itemId)
     {
       case R.id.menu_settings_core:
-        mView.launchSettingsActivity(SettingsFile.FILE_NAME_DOLPHIN);
-        return true;
-
-      case R.id.menu_settings_video:
-        mView.launchSettingsActivity(SettingsFile.FILE_NAME_GFX);
-        return true;
-
-      case R.id.menu_settings_gcpad:
-        mView.launchSettingsActivity(SettingsFile.FILE_NAME_GCPAD);
-        return true;
-
-      case R.id.menu_settings_wiimote:
-        mView.launchSettingsActivity(SettingsFile.FILE_NAME_WIIMOTE);
+        mView.launchSettingsActivity(SettingsFile.FILE_NAME_CONFIG);
         return true;
 
       case R.id.menu_refresh:

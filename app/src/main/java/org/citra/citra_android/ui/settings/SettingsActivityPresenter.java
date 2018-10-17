@@ -4,6 +4,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import org.citra.citra_android.NativeLibrary;
 import org.citra.citra_android.R;
 import org.citra.citra_android.model.settings.SettingSection;
 import org.citra.citra_android.services.DirectoryInitializationService;
@@ -12,10 +13,9 @@ import org.citra.citra_android.utils.DirectoryStateReceiver;
 import org.citra.citra_android.utils.Log;
 import org.citra.citra_android.utils.SettingsFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import rx.functions.Action1;
 
 public final class SettingsActivityPresenter
 {
@@ -64,14 +64,10 @@ public final class SettingsActivityPresenter
 			if (!TextUtils.isEmpty(gameId))
 			{
 				mSettings.add(SettingsFile.SETTINGS_DOLPHIN, SettingsFile.readFile("../GameSettings/" + gameId, mView));
-				mSettings.add(SettingsFile.SETTINGS_GFX, SettingsFile.readFile("../GameSettings/" + gameId, mView));
-				mSettings.add(SettingsFile.SETTINGS_WIIMOTE, SettingsFile.readFile("../GameSettings/" + gameId, mView));
 			}
 			else
 			{
-				mSettings.add(SettingsFile.SETTINGS_DOLPHIN, SettingsFile.readFile(SettingsFile.FILE_NAME_DOLPHIN, mView));
-				mSettings.add(SettingsFile.SETTINGS_GFX, SettingsFile.readFile(SettingsFile.FILE_NAME_GFX, mView));
-				mSettings.add(SettingsFile.SETTINGS_WIIMOTE, SettingsFile.readFile(SettingsFile.FILE_NAME_WIIMOTE, mView));
+				mSettings.add(SettingsFile.SETTINGS_DOLPHIN, SettingsFile.readFile(SettingsFile.FILE_NAME_CONFIG, mView));
 			}
 		}
 
@@ -81,6 +77,10 @@ public final class SettingsActivityPresenter
 
 	private void prepareDolphinDirectoriesIfNeeded()
 	{
+		File configFile = new File(DirectoryInitializationService.getUserDirectory() + "/config/"+SettingsFile.FILE_NAME_CONFIG + ".ini");
+    if(!configFile.exists()) {
+
+		}
 		if (DirectoryInitializationService.areDolphinDirectoriesReady()) {
 			loadSettingsUI();
 		} else {
@@ -139,16 +139,10 @@ public final class SettingsActivityPresenter
 					{
 						SettingsFile.saveFile("../GameSettings/" + gameId, mSettings.get(SettingsFile.SETTINGS_DOLPHIN), mView);
 					}
-					else if (menuTag.equals("GFX"))
-					{
-						SettingsFile.saveFile("../GameSettings/" + gameId, mSettings.get(SettingsFile.SETTINGS_GFX), mView);
-					}
 					mView.showToastMessage("Saved settings for " + gameId);
 				} else {
 					Log.debug("[SettingsActivity] Settings activity stopping. Saving settings to INI...");
-					SettingsFile.saveFile(SettingsFile.FILE_NAME_DOLPHIN, mSettings.get(SettingsFile.SETTINGS_DOLPHIN), mView);
-					SettingsFile.saveFile(SettingsFile.FILE_NAME_GFX, mSettings.get(SettingsFile.SETTINGS_GFX), mView);
-					SettingsFile.saveFile(SettingsFile.FILE_NAME_WIIMOTE, mSettings.get(SettingsFile.SETTINGS_WIIMOTE), mView);
+					SettingsFile.saveFile(SettingsFile.FILE_NAME_CONFIG, mSettings.get(SettingsFile.SETTINGS_DOLPHIN), mView);
 					mView.showToastMessage("Saved settings to INI files");
 				}
 		}

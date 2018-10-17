@@ -1,6 +1,6 @@
 package org.citra.citra_android.model.settings.view;
 
-import org.citra.citra_android.model.settings.BooleanSetting;
+import org.citra.citra_android.model.settings.IntSetting;
 import org.citra.citra_android.model.settings.Setting;
 
 public final class CheckBoxSetting extends SettingsItem
@@ -21,8 +21,8 @@ public final class CheckBoxSetting extends SettingsItem
       return mDefaultValue;
     }
 
-    BooleanSetting setting = (BooleanSetting) getSetting();
-    return setting.getValue();
+    IntSetting setting = (IntSetting) getSetting();
+    return setting.getValue() == 1;
   }
 
   /**
@@ -32,18 +32,18 @@ public final class CheckBoxSetting extends SettingsItem
    * @param checked Pretty self explanatory.
    * @return null if overwritten successfully; otherwise, a newly created BooleanSetting.
    */
-  public BooleanSetting setChecked(boolean checked)
+  public IntSetting setChecked(boolean checked)
   {
     if (getSetting() == null)
     {
-      BooleanSetting setting = new BooleanSetting(getKey(), getSection(), getFile(), checked);
+      IntSetting setting = new IntSetting(getKey(), getSection(), getFile(), checked ? 1 : 0);
       setSetting(setting);
       return setting;
     }
     else
     {
-      BooleanSetting setting = (BooleanSetting) getSetting();
-      setting.setValue(checked);
+      IntSetting setting = (IntSetting) getSetting();
+      setting.setValue(checked ? 1 : 0);
       return null;
     }
   }
