@@ -1,27 +1,17 @@
 package org.citra.citra_android.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v17.leanback.widget.ImageCardView;
 import android.support.v17.leanback.widget.Presenter;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import org.citra.citra_android.R;
 import org.citra.citra_android.model.Game;
-import org.citra.citra_android.services.DirectoryInitializationService;
-import org.citra.citra_android.ui.settings.SettingsActivity;
 import org.citra.citra_android.utils.PicassoUtils;
-import org.citra.citra_android.utils.SettingsFile;
 import org.citra.citra_android.viewholders.TvGameViewHolder;
-
-import java.io.File;
 
 /**
  * The Leanback library / docs call this a Presenter, but it works very
@@ -88,63 +78,6 @@ public final class GameRowPresenter extends Presenter
     Context context = holder.cardParent.getContext();
     Drawable background = ContextCompat.getDrawable(context, backgroundId);
     holder.cardParent.setInfoAreaBackground(background);
-    holder.cardParent.setOnLongClickListener(new View.OnLongClickListener()
-    {
-      @Override
-      public boolean onLongClick(View view)
-      {
-        FragmentActivity activity = (FragmentActivity) view.getContext();
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Game Settings")
-                .setItems(R.array.gameSettingsMenus, new DialogInterface.OnClickListener()
-                {
-                  public void onClick(DialogInterface dialog, int which)
-                  {
-                    switch (which)
-                    {
-                      case 0:
-                        SettingsActivity
-                                .launch(activity, SettingsFile.FILE_NAME_DOLPHIN, game.getGameId());
-                        break;
-                      case 1:
-                        SettingsActivity
-                                .launch(activity, SettingsFile.FILE_NAME_GFX, game.getGameId());
-                        break;
-                      case 2:
-                        String path = DirectoryInitializationService.getUserDirectory() +
-                                "/GameSettings/" + game.getGameId() + ".ini";
-                        File gameSettingsFile = new File(path);
-                        if (gameSettingsFile.exists())
-                        {
-                          if (gameSettingsFile.delete())
-                          {
-                            Toast.makeText(view.getContext(),
-                                    "Cleared settings for " + game.getGameId(), Toast.LENGTH_SHORT)
-                                    .show();
-                          }
-                          else
-                          {
-                            Toast.makeText(view.getContext(),
-                                    "Unable to clear settings for " + game.getGameId(),
-                                    Toast.LENGTH_SHORT).show();
-                          }
-                        }
-                        else
-                        {
-                          Toast.makeText(view.getContext(), "No game settings to delete",
-                                  Toast.LENGTH_SHORT).show();
-                        }
-                        break;
-                    }
-                  }
-                });
-
-        builder.show();
-        return true;
-      }
-    });
   }
 
 

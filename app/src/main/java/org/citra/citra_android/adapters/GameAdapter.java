@@ -1,7 +1,5 @@
 package org.citra.citra_android.adapters;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
@@ -10,19 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import org.citra.citra_android.R;
 import org.citra.citra_android.activities.EmulationActivity;
 import org.citra.citra_android.model.GameDatabase;
-import org.citra.citra_android.services.DirectoryInitializationService;
-import org.citra.citra_android.ui.settings.SettingsActivity;
 import org.citra.citra_android.utils.Log;
 import org.citra.citra_android.utils.PicassoUtils;
-import org.citra.citra_android.utils.SettingsFile;
 import org.citra.citra_android.viewholders.GameViewHolder;
-
-import java.io.File;
 
 /**
  * This adapter gets its information from a database Cursor. This fact, paired with the usage of
@@ -30,8 +22,7 @@ import java.io.File;
  * large dataset.
  */
 public final class GameAdapter extends RecyclerView.Adapter<GameViewHolder> implements
-        View.OnClickListener,
-        View.OnLongClickListener
+        View.OnClickListener
 {
   private Cursor mCursor;
   private GameDataSetObserver mObserver;
@@ -63,7 +54,6 @@ public final class GameAdapter extends RecyclerView.Adapter<GameViewHolder> impl
             .inflate(R.layout.card_game, parent, false);
 
     gameCard.setOnClickListener(this);
-    gameCard.setOnLongClickListener(this);
 
     // Use that view to create a ViewHolder.
     return new GameViewHolder(gameCard);
@@ -216,69 +206,6 @@ public final class GameAdapter extends RecyclerView.Adapter<GameViewHolder> impl
             holder.screenshotPath,
             holder.getAdapterPosition(),
             holder.imageScreenshot);
-  }
-
-  /**
-   * Launches the details activity for this Game, using an ID stored in the
-   * details button's Tag.
-   *
-   * @param view The Card button that was long-clicked.
-   */
-  @Override
-  public boolean onLongClick(View view)
-  {
-    GameViewHolder holder = (GameViewHolder) view.getTag();
-
-    // Get the ID of the game we want to look at.
-    String gameId = holder.gameId;
-
-    FragmentActivity activity = (FragmentActivity) view.getContext();
-
-
-    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-    builder.setTitle("Game Settings")
-            .setItems(R.array.gameSettingsMenus, new DialogInterface.OnClickListener()
-            {
-              public void onClick(DialogInterface dialog, int which)
-              {
-                switch (which)
-                {
-                  case 0:
-                    SettingsActivity.launch(activity, SettingsFile.FILE_NAME_DOLPHIN, gameId);
-                    break;
-                  case 1:
-                    SettingsActivity.launch(activity, SettingsFile.FILE_NAME_GFX, gameId);
-                    break;
-                  case 2:
-                    String path =
-                            DirectoryInitializationService.getUserDirectory() + "/GameSettings/" +
-                                    gameId + ".ini";
-                    File gameSettingsFile = new File(path);
-                    if (gameSettingsFile.exists())
-                    {
-                      if (gameSettingsFile.delete())
-                      {
-                        Toast.makeText(view.getContext(), "Cleared settings for " + gameId,
-                                Toast.LENGTH_SHORT).show();
-                      }
-                      else
-                      {
-                        Toast.makeText(view.getContext(), "Unable to clear settings for " + gameId,
-                                Toast.LENGTH_SHORT).show();
-                      }
-                    }
-                    else
-                    {
-                      Toast.makeText(view.getContext(), "No game settings to delete",
-                              Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
-              }
-            });
-
-    builder.show();
-    return true;
   }
 
   public static class SpacesItemDecoration extends RecyclerView.ItemDecoration
