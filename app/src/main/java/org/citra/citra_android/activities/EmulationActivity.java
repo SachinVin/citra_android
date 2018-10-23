@@ -72,6 +72,7 @@ public final class EmulationActivity extends AppCompatActivity
 
   private boolean mDeviceHasTouchScreen;
   private boolean mMenuVisible;
+  private boolean mBackPressedOnce;
 
   private static boolean sIsGameCubeGame;
 
@@ -324,8 +325,25 @@ public final class EmulationActivity extends AppCompatActivity
     }
     else
     {
-      mEmulationFragment.stopEmulation();
-      exitWithAnimation();
+      if (mBackPressedOnce) {
+        mEmulationFragment.stopEmulation();
+        exitWithAnimation();
+      }
+      else
+      {
+        mBackPressedOnce = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+      }
+
+      Handler mHandler = new Handler();
+      mHandler.postDelayed(new Runnable()
+      {
+        @Override public void run()
+        {
+          mBackPressedOnce = false;
+          mHandler.removeCallbacks(this);
+        }
+      }, 2000);
     }
   }
 
