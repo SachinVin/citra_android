@@ -27,8 +27,6 @@ import org.citra.citra_android.services.DirectoryInitializationService.Directory
 import org.citra.citra_android.utils.DirectoryStateReceiver;
 import org.citra.citra_android.utils.Log;
 
-import java.io.File;
-
 public final class EmulationFragment extends Fragment implements SurfaceHolder.Callback
 {
   private static final String KEY_GAMEPATH = "gamepath";
@@ -90,7 +88,7 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
     mPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
     String gamePath = getArguments().getString(KEY_GAMEPATH);
-    mEmulationState = new EmulationState(gamePath, getTemporaryStateFilePath());
+    mEmulationState = new EmulationState(gamePath);
   }
 
   /**
@@ -338,13 +336,10 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
     private State state;
     private Surface mSurface;
     private boolean mRunWhenSurfaceIsValid;
-    private boolean loadPreviousTemporaryState;
-    private final String temporaryStatePath;
 
-    EmulationState(String gamePath, String temporaryStatePath)
+    EmulationState(String gamePath)
     {
       mGamePath = gamePath;
-      this.temporaryStatePath = temporaryStatePath;
       // Starting state is stopped.
       state = State.STOPPED;
     }
@@ -405,21 +400,12 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
       {
         if (NativeLibrary.IsRunning())
         {
-          loadPreviousTemporaryState = false;
           state = State.PAUSED;
-          deleteFile(temporaryStatePath);
-        }
-        else
-        {
-          loadPreviousTemporaryState = true;
         }
       }
       else
       {
         Log.debug("[EmulationFragment] activity resumed or fresh start");
-        loadPreviousTemporaryState = false;
-        // activity resumed without being killed or this is the first run
-        deleteFile(temporaryStatePath);
       }
 
       // If the surface is set, run now. Otherwise, wait for it to get set.
@@ -478,16 +464,8 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
         mEmulationThread = new Thread(() ->
         {
           NativeLibrary.SurfaceChanged(mSurface);
-          if (loadPreviousTemporaryState)
-          {
-            Log.debug("[EmulationFragment] Starting emulation thread from previous state.");
-            NativeLibrary.Run(mGamePath, temporaryStatePath, true);
-          }
-          else
-          {
             Log.debug("[EmulationFragment] Starting emulation thread.");
             NativeLibrary.Run(mGamePath);
-          }
         }, "NativeEmulation");
         mEmulationThread.start();
 
@@ -503,29 +481,6 @@ public final class EmulationFragment extends Fragment implements SurfaceHolder.C
         Log.debug("[EmulationFragment] Bug, run called while already running.");
       }
       state = State.RUNNING;
-    }
-  }
-
-  public void saveTemporaryState()
-  {
-    NativeLibrary.SaveStateAs(getTemporaryStateFilePath(), true);
-  }
-
-  private String getTemporaryStateFilePath()
-  {
-    return getContext().getFilesDir() + File.separator + "temp.sav";
-  }
-
-  private static void deleteFile(String path)
-  {
-    try
-    {
-      File file = new File(path);
-      file.delete();
-    }
-    catch (Exception ex)
-    {
-      // fail safely
     }
   }
 }
