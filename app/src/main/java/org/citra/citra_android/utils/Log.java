@@ -9,7 +9,7 @@ import org.citra.citra_android.BuildConfig;
  */
 public final class Log
 {
-  private static final String TAG = "Dolphin";
+  private static final String TAG = "Citra Frontend";
 
   private Log()
   {

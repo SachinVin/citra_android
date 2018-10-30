@@ -68,12 +68,10 @@ android {
     defaultConfig {
         externalNativeBuild {
             cmake {
-                arguments "-DANDROID_STL=c++_static",
-                        "-DENABLE_QT=0", // Don't use QT
+                arguments "-DENABLE_QT=0", // Don't use QT
                         "-DENABLE_SDL2=0", // Don't use SDL
                         "-DENABLE_WEB_SERVICE=0", // Don't use telemetry
-                        "-DANDROID_ARM_NEON=true", // cryptopp requires Neon to work
-                        "-DENABLE_CUBEB=0"
+                        "-DANDROID_ARM_NEON=true" // cryptopp requires Neon to work
 
                 abiFilters "arm64-v8a", "x86_64", "armeabi-v7a"//, "x86"
             }
