@@ -73,7 +73,7 @@ public final class TvMainActivity extends FragmentActivity implements MainView
 
     // Set display parameters for the BrowseFragment
     mBrowseFragment.setHeadersState(BrowseFragment.HEADERS_ENABLED);
-    mBrowseFragment.setBrandColor(ContextCompat.getColor(this, R.color.dolphin_blue_dark));
+    mBrowseFragment.setBrandColor(ContextCompat.getColor(this, R.color.citra_orange_dark));
     buildRowsAdapter();
 
     mBrowseFragment.setOnItemViewClickedListener(

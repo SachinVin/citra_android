@@ -989,7 +989,7 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
         sPrefsEditor.putBoolean("OverlayInit", true);
         sPrefsEditor.apply();
     }
-private void N3DS_DefaultOverlay()
+	private void N3DS_DefaultOverlay()
     {
         SharedPreferences.Editor sPrefsEditor = mPreferences.edit();
         // Get screen size
