@@ -976,69 +976,69 @@ public final class InputOverlay extends SurfaceView implements OnTouchListener
   {
     mIsInEditMode = isInEditMode;
   }
-      private void defaultOverlay()
-    {
-        // It's possible that a user has created their overlay before this was added
-        // Only change the overlay if the 'A' button is not in the upper corner.
-        // GameCube
-        if (mPreferences.getFloat(ButtonType.BUTTON_A + "-X", 0f) == 0f)
-        {
-            N3DS_DefaultOverlay();
-        }
-        SharedPreferences.Editor sPrefsEditor = mPreferences.edit();
-        sPrefsEditor.putBoolean("OverlayInit", true);
-        sPrefsEditor.apply();
-    }
-	private void N3DS_DefaultOverlay()
-    {
-        SharedPreferences.Editor sPrefsEditor = mPreferences.edit();
-        // Get screen size
-        Display display = ((Activity) getContext()).getWindowManager().getDefaultDisplay();
-        DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-        float maxX = outMetrics.heightPixels;
-        float maxY = outMetrics.widthPixels;
-        // Height and width changes depending on orientation. Use the larger value for height.
-        if (maxY > maxX)
-        {
-            float tmp = maxX;
-            maxX = maxY;
-            maxY = tmp;
-        }
-        Resources res = getResources();
-        // Each value is a percent from max X/Y stored as an int. Have to bring that value down
-        // to a decimal before multiplying by MAX X/Y.
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_A + "-X",  (((float)res.getInteger(R.integer.N3DS_BUTTON_A_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_A + "-Y",  (((float)res.getInteger(R.integer.N3DS_BUTTON_A_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_B + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_B_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_B + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_B_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_X + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_X_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_X + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_X_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_Y + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_Y_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_Y + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_Y_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZL + "-X",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZL_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZL + "-Y",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZL_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZR + "-X",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZR_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZR + "-Y",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZR_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_DPAD_UP + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_UP_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_DPAD_UP + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_UP_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_L + "-X", (((float)res.getInteger(R.integer.N3DS_TRIGGER_L_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_L + "-Y", (((float)res.getInteger(R.integer.N3DS_TRIGGER_L_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_R + "-X", (((float)res.getInteger(R.integer.N3DS_TRIGGER_R_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_R + "-Y", (((float)res.getInteger(R.integer.N3DS_TRIGGER_R_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_START + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_START_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_START + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_START_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_SELECT + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_SELECT_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_SELECT + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_SELECT_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_HOME + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_HOME_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_HOME + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_HOME_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_STICK_C + "-X", (((float)res.getInteger(R.integer.N3DS_STICK_C_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_STICK_C + "-Y", (((float)res.getInteger(R.integer.N3DS_STICK_C_Y) / 1000) * maxY));
-        sPrefsEditor.putFloat(ButtonType.N3DS_STICK_LEFT + "-X", (((float)res.getInteger(R.integer.N3DS_STICK_MAIN_X) / 1000) * maxX));
-        sPrefsEditor.putFloat(ButtonType.N3DS_STICK_LEFT + "-Y", (((float)res.getInteger(R.integer.N3DS_STICK_MAIN_Y) / 1000) * maxY));
-        // We want to commit right away, otherwise the overlay could load before this is saved.
-        sPrefsEditor.commit();
-    }
+  private void defaultOverlay()
+  {
+    // It's possible that a user has created their overlay before this was added
+    // Only change the overlay if the 'A' button is not in the upper corner.
+    // GameCube
+    if (mPreferences.getFloat(ButtonType.BUTTON_A + "-X", 0f) == 0f)
+      {
+        N3DS_DefaultOverlay();
+      }
+    SharedPreferences.Editor sPrefsEditor = mPreferences.edit();
+    sPrefsEditor.putBoolean("OverlayInit", true);
+    sPrefsEditor.apply();
+  }
+  private void N3DS_DefaultOverlay()
+  {
+    SharedPreferences.Editor sPrefsEditor = mPreferences.edit();
+    // Get screen size
+    Display display = ((Activity) getContext()).getWindowManager().getDefaultDisplay();
+    DisplayMetrics outMetrics = new DisplayMetrics();
+    display.getMetrics(outMetrics);
+    float maxX = outMetrics.heightPixels;
+    float maxY = outMetrics.widthPixels;
+    // Height and width changes depending on orientation. Use the larger value for height.
+    if (maxY > maxX)
+     {
+        float tmp = maxX;
+        maxX = maxY;
+        maxY = tmp;
+     }
+    Resources res = getResources();
+    // Each value is a percent from max X/Y stored as an int. Have to bring that value down
+    // to a decimal before multiplying by MAX X/Y.
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_A + "-X",  (((float)res.getInteger(R.integer.N3DS_BUTTON_A_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_A + "-Y",  (((float)res.getInteger(R.integer.N3DS_BUTTON_A_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_B + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_B_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_B + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_B_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_X + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_X_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_X + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_X_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_Y + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_Y_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_Y + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_Y_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZL + "-X",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZL_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZL + "-Y",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZL_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZR + "-X",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZR_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_ZR + "-Y",  (((float)res.getInteger(R.integer.N3DS_BUTTON_ZR_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_DPAD_UP + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_UP_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_DPAD_UP + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_UP_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_L + "-X", (((float)res.getInteger(R.integer.N3DS_TRIGGER_L_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_L + "-Y", (((float)res.getInteger(R.integer.N3DS_TRIGGER_L_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_R + "-X", (((float)res.getInteger(R.integer.N3DS_TRIGGER_R_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_TRIGGER_R + "-Y", (((float)res.getInteger(R.integer.N3DS_TRIGGER_R_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_START + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_START_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_START + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_START_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_SELECT + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_SELECT_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_SELECT + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_SELECT_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_HOME + "-X", (((float)res.getInteger(R.integer.N3DS_BUTTON_HOME_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_BUTTON_HOME + "-Y", (((float)res.getInteger(R.integer.N3DS_BUTTON_HOME_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_STICK_C + "-X", (((float)res.getInteger(R.integer.N3DS_STICK_C_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_STICK_C + "-Y", (((float)res.getInteger(R.integer.N3DS_STICK_C_Y) / 1000) * maxY));
+    sPrefsEditor.putFloat(ButtonType.N3DS_STICK_LEFT + "-X", (((float)res.getInteger(R.integer.N3DS_STICK_MAIN_X) / 1000) * maxX));
+    sPrefsEditor.putFloat(ButtonType.N3DS_STICK_LEFT + "-Y", (((float)res.getInteger(R.integer.N3DS_STICK_MAIN_Y) / 1000) * maxY));
+    // We want to commit right away, otherwise the overlay could load before this is saved.
+    sPrefsEditor.commit();
+  }
   public boolean isInEditMode()
   {
     return mIsInEditMode;
