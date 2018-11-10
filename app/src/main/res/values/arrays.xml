@@ -32,6 +32,14 @@
         <item>0</item>
         <item>5</item>
     </integer-array>
+    <string-array name="systemClockNames" translatable="false">
+        <item>System clock</item>
+        <item>Simulated clock</item>
+    </string-array>
+    <integer-array name="systemClockValues" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </integer-array>
 
     <!-- Slot A Device Selection -->
     <string-array name="slotDeviceEntries" translatable="false">

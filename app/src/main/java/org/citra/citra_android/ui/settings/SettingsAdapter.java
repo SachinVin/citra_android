@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v17.leanback.widget.picker.TimePicker;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -18,12 +20,14 @@ import org.citra.citra_android.model.settings.FloatSetting;
 import org.citra.citra_android.model.settings.IntSetting;
 import org.citra.citra_android.model.settings.StringSetting;
 import org.citra.citra_android.model.settings.view.CheckBoxSetting;
+import org.citra.citra_android.model.settings.view.DateTimeSetting;
 import org.citra.citra_android.model.settings.view.InputBindingSetting;
 import org.citra.citra_android.model.settings.view.SettingsItem;
 import org.citra.citra_android.model.settings.view.SingleChoiceSetting;
 import org.citra.citra_android.model.settings.view.SliderSetting;
 import org.citra.citra_android.model.settings.view.SubmenuSetting;
 import org.citra.citra_android.ui.settings.viewholder.CheckBoxSettingViewHolder;
+import org.citra.citra_android.ui.settings.viewholder.DateTimeViewHolder;
 import org.citra.citra_android.ui.settings.viewholder.HeaderViewHolder;
 import org.citra.citra_android.ui.settings.viewholder.InputBindingSettingViewHolder;
 import org.citra.citra_android.ui.settings.viewholder.SettingViewHolder;
@@ -85,6 +89,11 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 			case SettingsItem.TYPE_INPUT_BINDING:
 				view = inflater.inflate(R.layout.list_item_setting, parent, false);
 				return new InputBindingSettingViewHolder(view, this, mContext);
+
+			case SettingsItem.TYPE_DATETIME_SETTING:
+                view = inflater.inflate(R.layout.list_item_setting, parent, false);
+                return new DateTimeViewHolder(view, this);
+
 
 			default:
 				Log.error("[SettingsAdapter] Invalid view type: " + viewType);
@@ -155,6 +164,39 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 		mDialog = builder.show();
 	}
 
+	public void onDateTimeClick(DateTimeSetting item){
+	    mClickedItem = item;
+
+	    AlertDialog.Builder builder = new AlertDialog.Builder(mView.getActivity());
+
+	    LayoutInflater inflater = LayoutInflater.from(mView.getActivity());
+	    View view = inflater.inflate(R.layout.sysclock_datetime_picker, null);
+
+        DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //set it
+                DatePicker dp = (DatePicker) view.findViewById(R.id.date_picker);
+                TimePicker tp = (TimePicker) view.findViewById(R.id.time_picker);
+                String datetime = dp.getYear() + "-" + dp.getMonth() + "-" + dp.getDayOfMonth() + " " + tp.getHour() + ":" + tp.getMinute() + ":01";
+                mView.putSetting(new StringSetting(item.getKey(), item.getSection(), item.getFile(), datetime));
+                mView.onSettingChanged();
+                mClickedItem = null;
+                mSeekbarProgress = -1;
+                closeDialog();
+            }
+        };
+	    DialogInterface.OnClickListener cancel = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                closeDialog();
+            }
+        };
+	    builder.setView(view);
+	    builder.setPositiveButton("Set", ok);
+	    builder.setNegativeButton("Cancel", cancel);
+	    mDialog = builder.show();
+    }
 	public void onSliderClick(SliderSetting item)
 	{
 		mClickedItem = item;

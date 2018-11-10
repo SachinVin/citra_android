@@ -7,6 +7,7 @@ import org.citra.citra_android.model.settings.IntSetting;
 import org.citra.citra_android.model.settings.Setting;
 import org.citra.citra_android.model.settings.SettingSection;
 import org.citra.citra_android.model.settings.view.CheckBoxSetting;
+import org.citra.citra_android.model.settings.view.DateTimeSetting;
 import org.citra.citra_android.model.settings.view.HeaderSetting;
 import org.citra.citra_android.model.settings.view.SettingsItem;
 import org.citra.citra_android.model.settings.view.SingleChoiceSetting;
@@ -113,12 +114,16 @@ public final class SettingsFragmentPresenter
 		Setting useCpuJit = null;
 		Setting audioStretch = null;
 		Setting region = null;
+		Setting systemClock = null;
+		Setting dateTime = null;
 
 		if (!mSettings.get(SettingsFile.SETTINGS_DOLPHIN).isEmpty())
 		{
 			useCpuJit = mSettings.get(SettingsFile.SETTINGS_DOLPHIN).get(SettingsFile.SECTION_CORE).getSetting(SettingsFile.KEY_CPU_JIT);
 			audioStretch = mSettings.get(SettingsFile.SETTINGS_DOLPHIN).get(SettingsFile.SECTION_AUDIO).getSetting(SettingsFile.KEY_ENABLE_AUDIO_STRETCHING);
 			region = mSettings.get(SettingsFile.SETTINGS_DOLPHIN).get(SettingsFile.SECTION_SYSTEM).getSetting(SettingsFile.KEY_REGION_VALUE);
+			systemClock = mSettings.get(SettingsFile.SETTINGS_DOLPHIN).get(SettingsFile.SECTION_SYSTEM).getSetting(SettingsFile.KEY_INIT_CLOCK);
+			dateTime = mSettings.get(SettingsFile.SETTINGS_DOLPHIN).get(SettingsFile.SECTION_SYSTEM).getSetting(SettingsFile.KEY_INIT_TIME);
 		}
 		else
 		{
@@ -138,6 +143,8 @@ public final class SettingsFragmentPresenter
 		}
 		sl.add(new SingleChoiceSetting(SettingsFile.KEY_REGION_VALUE, SettingsFile.SECTION_SYSTEM,SettingsFile.SETTINGS_DOLPHIN, R.string.region, 0, R.array.regionNames, R.array.regionValues, -1, region));
 		sl.add(new CheckBoxSetting(SettingsFile.KEY_ENABLE_AUDIO_STRETCHING, SettingsFile.SECTION_AUDIO, SettingsFile.SETTINGS_DOLPHIN, R.string.audio_stretch, R.string.audio_stretch_description, false, audioStretch));
+		sl.add(new SingleChoiceSetting(SettingsFile.KEY_INIT_CLOCK, SettingsFile.SECTION_SYSTEM, SettingsFile.SETTINGS_DOLPHIN, R.string.init_clock, R.string.init_clock_descrip, R.array.systemClockNames, R.array.systemClockValues, 0, systemClock));
+		sl.add(new DateTimeSetting(SettingsFile.KEY_INIT_TIME, SettingsFile.SECTION_SYSTEM, SettingsFile.SETTINGS_DOLPHIN, R.string.init_time, R.string.init_time_descrip, "2000-01-01 00:00:01", dateTime));
 	}
 
 	private void addGraphicsSettings(ArrayList<SettingsItem> sl)
