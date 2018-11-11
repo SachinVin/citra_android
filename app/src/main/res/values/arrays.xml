@@ -33,7 +33,7 @@
         <item>5</item>
     </integer-array>
     <string-array name="systemClockNames" translatable="false">
-        <item>System clock</item>
+        <item>Device clock</item>
         <item>Simulated clock</item>
     </string-array>
     <integer-array name="systemClockValues" translatable="false">
