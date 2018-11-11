@@ -91,8 +91,8 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 				return new InputBindingSettingViewHolder(view, this, mContext);
 
 			case SettingsItem.TYPE_DATETIME_SETTING:
-                view = inflater.inflate(R.layout.list_item_setting, parent, false);
-                return new DateTimeViewHolder(view, this);
+                		view = inflater.inflate(R.layout.list_item_setting, parent, false);
+                		return new DateTimeViewHolder(view, this);
 
 
 			default:
