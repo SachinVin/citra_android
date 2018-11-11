@@ -178,7 +178,11 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
                 //set it
                 DatePicker dp = (DatePicker) view.findViewById(R.id.date_picker);
                 TimePicker tp = (TimePicker) view.findViewById(R.id.time_picker);
-                String datetime = dp.getYear() + "-" + dp.getMonth() + "-" + dp.getDayOfMonth() + " " + tp.getHour() + ":" + tp.getMinute() + ":01";
+                int year = dp.getYear();
+                if (year < 2000){
+                    year = 2000;
+                }
+                String datetime = year + "-" + dp.getMonth() + "-" + dp.getDayOfMonth() + " " + tp.getHour() + ":" + tp.getMinute() + ":01";
                 mView.putSetting(new StringSetting(item.getKey(), item.getSection(), item.getFile(), datetime));
                 mView.onSettingChanged();
                 mClickedItem = null;
