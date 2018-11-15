@@ -20,5 +20,6 @@
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:scaleX="2.00"
-        android:scaleY="2.00" />
+        android:scaleY="2.00"
+        android:scrollX="-20dp" />
 </LinearLayout>

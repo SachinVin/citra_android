@@ -14,7 +14,7 @@ public final class DateTimeSetting extends SettingsItem
         mDefaultValue = defaultValue;
     }
 
-    public String getSelectedValue()
+    public String getValue()
     {
         if (getSetting() != null)
         {

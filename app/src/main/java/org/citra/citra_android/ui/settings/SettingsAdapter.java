@@ -172,17 +172,30 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 	    LayoutInflater inflater = LayoutInflater.from(mView.getActivity());
 	    View view = inflater.inflate(R.layout.sysclock_datetime_picker, null);
 
+        DatePicker dp = (DatePicker) view.findViewById(R.id.date_picker);
+        TimePicker tp = (TimePicker) view.findViewById(R.id.time_picker);
+
+        //set date and time to substrings of settingValue; format = 2018-12-24 04:20:69 (alright maybe not that 69)
+        String settingValue = item.getValue();
+        dp.updateDate(Integer.parseInt(settingValue.substring(0, 4)), Integer.parseInt(settingValue.substring(5, 7)) - 1, Integer.parseInt(settingValue.substring(8, 10)));
+
+        tp.setIs24Hour(true);
+        tp.setHour(Integer.parseInt(settingValue.substring(11, 12)));
+        tp.setMinute(Integer.parseInt(settingValue.substring(14, 15)));
+
         DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //set it
-                DatePicker dp = (DatePicker) view.findViewById(R.id.date_picker);
-                TimePicker tp = (TimePicker) view.findViewById(R.id.time_picker);
                 int year = dp.getYear();
                 if (year < 2000){
                     year = 2000;
                 }
-                String datetime = year + "-" + dp.getMonth() + "-" + dp.getDayOfMonth() + " " + tp.getHour() + ":" + tp.getMinute() + ":01";
+                String month = ("00" + (dp.getMonth() + 1)).substring(String.valueOf(dp.getMonth() + 1).length());
+                String day = ("00" + dp.getDayOfMonth()).substring(String.valueOf(dp.getDayOfMonth()).length());
+                String hr = ("00" + tp.getHour()).substring(String.valueOf(tp.getHour()).length());
+                String min = ("00" + tp.getMinute()).substring(String.valueOf(tp.getMinute()).length());
+                String datetime = year + "-" + month + "-" + day + " " + hr + ":" + min + ":01";
                 mView.putSetting(new StringSetting(item.getKey(), item.getSection(), item.getFile(), datetime));
                 mView.onSettingChanged();
                 mClickedItem = null;
