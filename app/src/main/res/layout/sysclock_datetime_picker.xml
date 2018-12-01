@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:gravity="center"
+    >
+    <DatePicker
+        android:id="@+id/date_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:spinnersShown="true"/>
+
+    <android.support.v17.leanback.widget.picker.TimePicker
+        android:id="@+id/time_picker"
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:scaleX="2.00"
+        android:scaleY="2.00"
+        android:scrollX="-20dp" />
+</LinearLayout>

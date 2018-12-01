@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v17.leanback.widget.picker.TimePicker;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -18,12 +20,14 @@ import org.citra.citra_android.model.settings.FloatSetting;
 import org.citra.citra_android.model.settings.IntSetting;
 import org.citra.citra_android.model.settings.StringSetting;
 import org.citra.citra_android.model.settings.view.CheckBoxSetting;
+import org.citra.citra_android.model.settings.view.DateTimeSetting;
 import org.citra.citra_android.model.settings.view.InputBindingSetting;
 import org.citra.citra_android.model.settings.view.SettingsItem;
 import org.citra.citra_android.model.settings.view.SingleChoiceSetting;
 import org.citra.citra_android.model.settings.view.SliderSetting;
 import org.citra.citra_android.model.settings.view.SubmenuSetting;
 import org.citra.citra_android.ui.settings.viewholder.CheckBoxSettingViewHolder;
+import org.citra.citra_android.ui.settings.viewholder.DateTimeViewHolder;
 import org.citra.citra_android.ui.settings.viewholder.HeaderViewHolder;
 import org.citra.citra_android.ui.settings.viewholder.InputBindingSettingViewHolder;
 import org.citra.citra_android.ui.settings.viewholder.SettingViewHolder;
@@ -85,6 +89,11 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 			case SettingsItem.TYPE_INPUT_BINDING:
 				view = inflater.inflate(R.layout.list_item_setting, parent, false);
 				return new InputBindingSettingViewHolder(view, this, mContext);
+
+			case SettingsItem.TYPE_DATETIME_SETTING:
+                		view = inflater.inflate(R.layout.list_item_setting, parent, false);
+                		return new DateTimeViewHolder(view, this);
+
 
 			default:
 				Log.error("[SettingsAdapter] Invalid view type: " + viewType);
@@ -155,6 +164,56 @@ public final class SettingsAdapter extends RecyclerView.Adapter<SettingViewHolde
 		mDialog = builder.show();
 	}
 
+	public void onDateTimeClick(DateTimeSetting item){
+	    mClickedItem = item;
+
+	    AlertDialog.Builder builder = new AlertDialog.Builder(mView.getActivity());
+
+	    LayoutInflater inflater = LayoutInflater.from(mView.getActivity());
+	    View view = inflater.inflate(R.layout.sysclock_datetime_picker, null);
+
+        DatePicker dp = (DatePicker) view.findViewById(R.id.date_picker);
+        TimePicker tp = (TimePicker) view.findViewById(R.id.time_picker);
+
+        //set date and time to substrings of settingValue; format = 2018-12-24 04:20:69 (alright maybe not that 69)
+        String settingValue = item.getValue();
+        dp.updateDate(Integer.parseInt(settingValue.substring(0, 4)), Integer.parseInt(settingValue.substring(5, 7)) - 1, Integer.parseInt(settingValue.substring(8, 10)));
+
+        tp.setIs24Hour(true);
+        tp.setHour(Integer.parseInt(settingValue.substring(11, 12)));
+        tp.setMinute(Integer.parseInt(settingValue.substring(14, 15)));
+
+        DialogInterface.OnClickListener ok = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //set it
+                int year = dp.getYear();
+                if (year < 2000){
+                    year = 2000;
+                }
+                String month = ("00" + (dp.getMonth() + 1)).substring(String.valueOf(dp.getMonth() + 1).length());
+                String day = ("00" + dp.getDayOfMonth()).substring(String.valueOf(dp.getDayOfMonth()).length());
+                String hr = ("00" + tp.getHour()).substring(String.valueOf(tp.getHour()).length());
+                String min = ("00" + tp.getMinute()).substring(String.valueOf(tp.getMinute()).length());
+                String datetime = year + "-" + month + "-" + day + " " + hr + ":" + min + ":01";
+                mView.putSetting(new StringSetting(item.getKey(), item.getSection(), item.getFile(), datetime));
+                mView.onSettingChanged();
+                mClickedItem = null;
+                mSeekbarProgress = -1;
+                closeDialog();
+            }
+        };
+	    DialogInterface.OnClickListener cancel = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                closeDialog();
+            }
+        };
+	    builder.setView(view);
+	    builder.setPositiveButton("Set", ok);
+	    builder.setNegativeButton("Cancel", cancel);
+	    mDialog = builder.show();
+    }
 	public void onSliderClick(SliderSetting item)
 	{
 		mClickedItem = item;
