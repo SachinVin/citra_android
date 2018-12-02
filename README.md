@@ -8,6 +8,14 @@ Since this code is almost entirely a copy of the Dolphin frontend,there are a lo
 
 **Download** apk files from [here](https://github.com/SachinVin/citra_android/releases)
 
+### Device Requirements
+* OS
+  * Android (5.0 Lollipop or higher).
+* Processor
+  * A processor with support for either ARMv8 or x86-64; 32-bit processors (ARMv7, x86) are not supported by Citra.
+* Graphics
+  * A graphics processor that supports OpenGL ES 3.2 or higher.
+    
 ### Building
 You can follow [this guide](https://github.com/dolphin-emu/dolphin/blob/master/AndroidSetup.md) if haven't set up your Android environment.
 Once that is done, follow [this](https://developer.android.com/studio/projects/add-native-code#vanilla_cmake) to setup and use Cmake 3.8(min. for Citra) or higher.
@@ -20,14 +28,7 @@ Edit the CMakeLists path in the build.gradle to point to the location of the CMa
 
 You're all set, now hit build.
 
-### Device Requirements
-* OS
-  * Android (5.0 Lollipop or higher).
-* Processor
-  * A processor with support for either ARMv8 or x86-64; 32-bit processors (ARMv7, x86) are not supported by Citra.
-* Graphics
-  * A graphics processor that supports OpenGL ES 3.2 or higher.
-    
+
 ### Known Issues
 Since this is in very early stages of development a lot of things don't quite work properly yet:
 * Colors in games (since GLES doesn't support BGR color ordering, the color channels may be inverted);
