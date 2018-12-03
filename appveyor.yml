@@ -1,0 +1,56 @@
+version: 1.0.{build}
+image: Previous Visual Studio 2017
+
+environment:
+  ANDROID_HOME: C:\\android-sdk-windows
+  SDK_TOOLS_URL: https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip
+  NINJA_URL: https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip
+  CMAKE_VER: cmake-3.11.4-win64-x64
+  CMAKE_URL: https://cmake.org/files/v3.11/%CMAKE_VER%.zip
+
+  # For apk Signing
+  STORE_PASS:
+    secure: dOEp4+qSGaG9DgQ1rS5sWsV1zL+luCnrW18DqDbkMtY=
+  KEY_PASS:
+    secure: K49YkLjesIoGMUDYO/xXl86rjP9+q9FyeZm6e7Awc2M=
+  KEY_ALIAS:
+    secure: TTxLUJ1ZYB6cReJVM2CX+w==
+
+install:
+  - mkdir C:\deps\
+
+  - rem Install Ninja
+  - appveyor DownloadFile "%NINJA_URL%" -FileName "%TMP%/ninja.zip"
+  - mkdir C:\deps\ninja
+  - 7z x "%TMP%/ninja.zip" -oC:\deps\ninja > nul
+  - set PATH=C:\deps\ninja;%PATH%
+  - ninja --version
+ 
+  - rem Install an older Cmake and remove the currently installed version from path
+  - appveyor DownloadFile "%CMAKE_URL%" -FileName "%TMP%/cmake.zip"
+  - 7z x "%TMP%/cmake.zip" -oC:\deps > nul
+  - set PATH=%PATH:C:\Program Files (x86)\cmake\bin;=%
+  - set PATH=C:\deps\%CMAKE_VER%\bin;%PATH%
+  - cmake --version
+
+  - rem Install Android SDK and NDK
+  - mkdir "%ANDROID_HOME%"
+  - appveyor DownloadFile "%SDK_TOOLS_URL%" -FileName "%TMP%/sdk-tools.zip"
+  - 7z x "%TMP%/sdk-tools.zip" -o"%ANDROID_HOME%" > nul
+  - set PATH=%PATH%;"%ANDROID_HOME%\tools\bin"
+  - yes 2> nul | sdkmanager --licenses > nul
+  - sdkmanager "build-tools;28.0.3"
+  - sdkmanager "ndk-bundle"
+
+  - git clone --recursive https://github.com/SachinVin/citra.git C:\projects\citra > nul
+build_script:
+  - cd C:\projects\citra-android
+
+  - If DEFINED APPVEYOR_PULL_REQUEST_NUMBER (gradlew.bat assembleDebug) else (gradlew.bat assembleRelease)
+
+artifacts:
+- path: app\build\outputs\apk\release\*.apk
+  name: CitraAndroid
+
+- path: app\build\outputs\apk\debug\*.apk
+  name: CitraAndroid-debug

@@ -32,12 +32,10 @@ android {
 
     signingConfigs {
         release {
-            if (project.hasProperty('keystore')) {
-                storeFile file(project.property('keystore'))
-                storePassword project.property('storepass')
-                keyAlias project.property('keyalias')
-                keyPassword project.property('keypass')
-            }
+            storeFile file("../key_citra_2018.jks")
+            storePassword System.getenv("STORE_PASS")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASS")
         }
     }
 
