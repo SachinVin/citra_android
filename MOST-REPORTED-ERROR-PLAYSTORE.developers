@@ -606,3 +606,47 @@ Caused by: java.lang.IllegalStateException:
   at android.app.Activity.dispatchRequestPermissionsResult (Activity.java:6625)
   at android.app.Activity.dispatchActivityResult (Activity.java:6504)
   at android.app.ActivityThread.deliverResults (ActivityThread.java:3936)
+
+Occurrence: Extremely Strong (We must solve this quick bug !!!)
+On : N/A !
+PlayStore Report Name : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR): libmain.so
+Only on : 37 (last actual version)
+
+Ex : Samsung Galaxy J8 (j8y18lte) on Android 8.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002cfa5e  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/lib/arm/libmain.so
+  #01  pc 00000000002cddbf  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/lib/arm/libmain.so
+  #02  pc 00000000002c7b3d  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/lib/arm/libmain.so (_Z19InterpreterMainLoopP11ARMul_State+356)
+  #03  pc 00000000002c6c47  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/lib/arm/libmain.so (_ZN10ARM_DynCom19ExecuteInstructionsEy+12)
+  #04  pc 0000000000296661  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/lib/arm/libmain.so (_ZN4Core6System7RunLoopEb+64)
+  #05  pc 00000000002840e5  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/lib/arm/libmain.so (Java_org_citra_citra_1android_NativeLibrary_Run__Ljava_lang_String_2+816)
+  #06  pc 0000000000066d91  /data/app/org.citra.citra_android-YoJTDb0p3Q9v00I7gM3ZMw==/oat/arm/base.odex
+  
+Ex : LGE LG K8 (mm1v) on Android 6.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002cfa5e  /data/app/org.citra.citra_android-1/lib/arm/libmain.so
+  #01  pc 00000000002cddbf  /data/app/org.citra.citra_android-1/lib/arm/libmain.so
+  #02  pc 00000000002c7b3d  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_Z19InterpreterMainLoopP11ARMul_State+356)
+  #03  pc 00000000002c6c47  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_ZN10ARM_DynCom19ExecuteInstructionsEy+12)
+  #04  pc 0000000000296661  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_ZN4Core6System7RunLoopEb+64)
+  #05  pc 00000000002840e5  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (Java_org_citra_citra_1android_NativeLibrary_Run__Ljava_lang_String_2+816)
+  #06  pc 00000000008b1b99  /data/app/org.citra.citra_android-1/oat/arm/base.odex
+  
+Ex : Motorola Moto G(4) (athene) on Android 7.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002cfa5e  /data/app/org.citra.citra_android-1/lib/arm/libmain.so
+  #01  pc 00000000002cddbf  /data/app/org.citra.citra_android-1/lib/arm/libmain.so
+  #02  pc 00000000002c7b3d  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_Z19InterpreterMainLoopP11ARMul_State+356)
+  #03  pc 00000000002c6c47  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_ZN10ARM_DynCom19ExecuteInstructionsEy+12)
+  #04  pc 0000000000296661  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_ZN4Core6System7RunLoopEb+64)
+  #05  pc 00000000002840e5  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (Java_org_citra_citra_1android_NativeLibrary_Run__Ljava_lang_String_2+816)
+  #06  pc 00000000005797a1  /data/app/org.citra.citra_android-1/oat/arm/base.odex
