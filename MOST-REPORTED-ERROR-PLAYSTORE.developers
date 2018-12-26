@@ -1,0 +1,608 @@
+#Note: All data present here as been reported by Android to the Google Play Console
+#Even if Citra does not install from the PlayStore, the PlayStore will still analyze the application, 
+# it takes into account only the package and ignores the rest (signature, app version, ...)
+#The Play Store does not regroup errors intelligently, I have to copy everything myself and organize,
+# there may be some very similar bug marked several times
+
+/*
+Some problems:
+(All versions) Slow (meh...)
+(All versions) Crash when we scan a directory : The problem was especially noticeable when the region was not "good"
+                  (example: region of citra = auto (Europe), crash during the scan of Mario Kart 7 USA)
+(All version) We need to restart Citra or suspend it for be able to launch another game
+*/
+
+Occurrence: Extremely Strong
+On : Galaxy Devices
+PlayStore Report Name : java.lang.IllegalStateException : org.citra.citra_android.services.DirectoryInitializationService.startService
+Android Version : Android Version, Number of reports, Number of reports %
+  Android 8.0, 4 705, 80,1 %
+  Android 8.1, 1 168, 19,9 %
+  Android 9, 1, 0,0 %
+App Version : App Version, Number of reports, Number of reports %
+  V32, 5 084, 86,6 %
+  V37, 736, 12,5 %
+  V9, 37,	0,6 %
+  V22, 14, 0,2 %
+  V15, 3,	0,1 %
+Most impacted devices : Device Name, Number of reports, Number of reports %
+  Galaxy J6 (j6lte)	468, 8,0 %
+  Galaxy J7 (j7y17lte), 326, 5,5 %
+  Galaxy S8 (dreamlte), 301, 5,1 %
+  Galaxy S9 (starlte), 227, 3,9 %
+  Galaxy A6 (a6lte), 223, 3,8 %
+   More...(XX,X%)
+
+Error: 
+  at org.citra.citra_android.services.DirectoryInitializationService.startService (DirectoryInitializationService.java:58)
+  at org.citra.citra_android.DolphinApplication.onCreate (DolphinApplication.java:19)
+  
+Ex : Samsung Galaxy S8 on Android 8.0
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.handleBindApplication (ActivityThread.java:6100)
+  at android.app.ActivityThread.-wrap1 (Unknown Source)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1791)
+  at android.os.Handler.dispatchMessage (Handler.java:106)
+  at android.os.Looper.loop (Looper.java:164)
+  at android.app.ActivityThread.main (ActivityThread.java:7000)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run (RuntimeInit.java:441)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:1408)
+Caused by: java.lang.IllegalStateException: 
+  at android.app.ContextImpl.startServiceCommon (ContextImpl.java:1600)
+  at android.app.ContextImpl.startService (ContextImpl.java:1546)
+  at android.content.ContextWrapper.startService (ContextWrapper.java:669)
+  at org.citra.citra_android.services.DirectoryInitializationService.startService (DirectoryInitializationService.java:58)
+  at org.citra.citra_android.DolphinApplication.onCreate (DolphinApplication.java:19)
+  at android.app.Instrumentation.callApplicationOnCreate (Instrumentation.java:1127)
+  at android.app.ActivityThread.handleBindApplication (ActivityThread.java:6097)
+  
+Ex : Samsung Galaxy Note 9 on Android 8.1
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.handleBindApplication (ActivityThread.java:6100)
+  at android.app.ActivityThread.-wrap1 (Unknown Source)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1791)
+  at android.os.Handler.dispatchMessage (Handler.java:106)
+  at android.os.Looper.loop (Looper.java:164)
+  at android.app.ActivityThread.main (ActivityThread.java:7002)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run (RuntimeInit.java:441)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:1408)
+Caused by: java.lang.IllegalStateException: 
+  at android.app.ContextImpl.startServiceCommon (ContextImpl.java:1600)
+  at android.app.ContextImpl.startService (ContextImpl.java:1546)
+  at android.content.ContextWrapper.startService (ContextWrapper.java:669)
+  at org.citra.citra_android.services.DirectoryInitializationService.startService (DirectoryInitializationService.java:58)
+  at org.citra.citra_android.DolphinApplication.onCreate (DolphinApplication.java:19)
+  at android.app.Instrumentation.callApplicationOnCreate (Instrumentation.java:1126)
+  at android.app.ActivityThread.handleBindApplication (ActivityThread.java:6097)
+
+Occurrence: Extremely Strong
+On : All devices ?
+PlayStore Report Name : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR) : _ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE
+Android Version :
+  Android 8.0, 1 369, 53,8 %
+  Android 7.0, 542, 21,3 %
+  Android 6.0, 362, 14,2 %
+  Android 7.1, 271, 10,7 %
+App Version :
+  32	2 288	89,9 %
+  37,252	9,9 %
+  22	4	0,2 %
+Most impacted devices : 
+  P10 lite (HWWAS-H), 97, 3,8 %
+  Redmi Note 4 (mido), 78, 3,1 %
+  P20 lite (HWANE), 75, 2,9 %
+  V30 (joan), 63, 2,5 %
+  Galaxy S9+ (star2lteks)	51	2,0 %
+   More...(XX,X%)
+
+Ex : Motorola moto e(5) cruise (james) on Android 8.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 0000000000282f56  /data/app/org.citra.citra_android-kyuGT6qXUSDrbkjMPgss-Q==/lib/arm/libmain.so (_ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+69)
+  #01  pc 00000000002833bd  /data/app/org.citra.citra_android-kyuGT6qXUSDrbkjMPgss-Q==/lib/arm/libmain.so (_ZN8GameInfo7GetIconENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+40)
+  #02  pc 00000000002838f9  /data/app/org.citra.citra_android-kyuGT6qXUSDrbkjMPgss-Q==/lib/arm/libmain.so (Java_org_citra_citra_1android_NativeLibrary_GetBanner+48)
+  #03  pc 0000000000065ee9  /data/app/org.citra.citra_android-kyuGT6qXUSDrbkjMPgss-Q==/oat/arm/base.odex
+  
+Ex : Samsung Galaxy S8 (dreamqltesq) on Android 8.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002811c8  /data/app/org.citra.citra_android--NpW3KI4yooNSyx8byZDeA==/lib/arm64/libmain.so (_ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+116)
+  #01  pc 0000000000281d60  /data/app/org.citra.citra_android--NpW3KI4yooNSyx8byZDeA==/lib/arm64/libmain.so (_ZN8GameInfo7GetIconENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+192)
+  #02  pc 00000000002823e4  /data/app/org.citra.citra_android--NpW3KI4yooNSyx8byZDeA==/lib/arm64/libmain.so (Java_org_citra_citra_1android_NativeLibrary_GetBanner+292)
+  #03  pc 000000000007794c  /data/app/org.citra.citra_android--NpW3KI4yooNSyx8byZDeA==/oat/arm64/base.odex
+  
+Ex: Huawei P8 lite 2017 (HWPRA-H) on Android 8.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002811c8  /data/app/org.citra.citra_android-phrFd_YzAMzkSmuSVNs3tw==/lib/arm64/libmain.so (_ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+116)
+  #01  pc 0000000000281d60  /data/app/org.citra.citra_android-phrFd_YzAMzkSmuSVNs3tw==/lib/arm64/libmain.so (_ZN8GameInfo7GetIconENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+192)
+  #02  pc 00000000002823e4  /data/app/org.citra.citra_android-phrFd_YzAMzkSmuSVNs3tw==/lib/arm64/libmain.so (Java_org_citra_citra_1android_NativeLibrary_GetBanner+292)
+  #03  pc 000000000007682c  /data/app/org.citra.citra_android-phrFd_YzAMzkSmuSVNs3tw==/oat/arm64/base.odex
+  
+
+Occurence : Extremely Strong
+On : All Devices ?
+PlayStore Report Name : signal 11 (SIGSEGV), code 1 (SEGV_MAPERR) : _ZN12InputManager13ButtonFactory10ReleaseKeyEi
+  
+Ex : Samsung Galaxy A9 on Android 8.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002811c8  /data/app/org.citra.citra_android-i4Q6BPOdAJEZ_8Lxii__4A==/lib/arm64/libmain.so (_ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+116)
+  #01  pc 0000000000281d60  /data/app/org.citra.citra_android-i4Q6BPOdAJEZ_8Lxii__4A==/lib/arm64/libmain.so (_ZN8GameInfo7GetIconENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+192)
+  #02  pc 00000000002823e4  /data/app/org.citra.citra_android-i4Q6BPOdAJEZ_8Lxii__4A==/lib/arm64/libmain.so (Java_org_citra_citra_1android_NativeLibrary_GetBanner+292)
+  #03  pc 000000000007694c  /data/app/org.citra.citra_android-i4Q6BPOdAJEZ_8Lxii__4A==/oat/arm64/base.odex
+  
+Ex : Huawei FIG-LX1 on Android 8.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 00000000002811c8  /data/app/org.citra.citra_android-_V_EN6lI68htNmue-sp4aA==/lib/arm64/libmain.so (_ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+116)
+  #01  pc 0000000000281d60  /data/app/org.citra.citra_android-_V_EN6lI68htNmue-sp4aA==/lib/arm64/libmain.so (_ZN8GameInfo7GetIconENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+192)
+  #02  pc 00000000002823e4  /data/app/org.citra.citra_android-_V_EN6lI68htNmue-sp4aA==/lib/arm64/libmain.so (Java_org_citra_citra_1android_NativeLibrary_GetBanner+292)
+  #03  pc 000000000007694c  /data/app/org.citra.citra_android-_V_EN6lI68htNmue-sp4aA==/oat/arm64/base.odex
+  
+Ex : LGE LG K20 Plus on Android 7.0
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+pid: 0, tid: 0 >>> org.citra.citra_android <<<
+
+backtrace:
+  #00  pc 0000000000282f4e  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_ZN8GameInfo11GetSMDHDataENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+69)
+  #01  pc 00000000002833b5  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (_ZN8GameInfo7GetIconENSt6__ndk112basic_stringIcNS0_11char_traitsIcEENS0_9allocatorIcEEEE+40)
+  #02  pc 00000000002838f1  /data/app/org.citra.citra_android-1/lib/arm/libmain.so (Java_org_citra_citra_1android_NativeLibrary_GetBanner+48)
+  #03  pc 0000000000952521  /data/app/org.citra.citra_android-1/oat/arm/base.odex
+  
+Occurrence: Strong
+On : N/A
+PlayStore Report Name :
+  Input dispatching timed out (Waiting to send non-key event because the touched window has not finished processing certain input events
+  that were delivered to it over 500.0ms ago. Wait queue length: 30. Wait queue head age: 8503.8ms.)
+  org.citra.citra_android.activities.EmulationActivity
+Android Version :
+  N/A, 6.0, 7.0
+App Version :
+  N/A, 32
+Most impacted devices :  
+  N/A
+
+Ex : Huawei HUAWEI MediaPad M3 Lite on Android 7.0
+"main" prio=5 tid=1 Native
+  | group="main" sCount=1 dsCount=0 obj=0x7780cad8 self=0x7f958a2a00
+  | sysTid=21696 nice=-10 cgrp=default sched=0/0 handle=0x7f99906a98
+  | state=S schedstat=( 12317751778 1805278829 11911 ) utm=1063 stm=168 core=7 HZ=100
+  | stack=0x7fde41d000-0x7fde41f000 stackSize=8MB
+  | held mutexes=
+  at android.view.ThreadedRenderer.nSyncAndDrawFrame (Native method)
+  at android.view.ThreadedRenderer.draw (ThreadedRenderer.java:818)
+  at android.view.ViewRootImpl.draw (ViewRootImpl.java:3000)
+  at android.view.ViewRootImpl.performDraw (ViewRootImpl.java:2794)
+  at android.view.ViewRootImpl.performTraversals (ViewRootImpl.java:2382)
+  at android.view.ViewRootImpl.doTraversal (ViewRootImpl.java:1372)
+  at android.view.ViewRootImpl$TraversalRunnable.run (ViewRootImpl.java:6782)
+  at android.view.Choreographer$CallbackRecord.run (Choreographer.java:933)
+  at android.view.Choreographer.doCallbacks (Choreographer.java:742)
+  at android.view.Choreographer.doFrame (Choreographer.java:674)
+  at android.view.Choreographer$FrameDisplayEventReceiver.run (Choreographer.java:919)
+  at android.os.Handler.handleCallback (Handler.java:761)
+  at android.os.Handler.dispatchMessage (Handler.java:98)
+  at android.os.Looper.loop (Looper.java:156)
+  at android.app.ActivityThread.main (ActivityThread.java:6623)
+  at java.lang.reflect.Method.invoke! (Native method)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run (ZygoteInit.java:942)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:832)
+  
+Ex : Huawei Honor 7 (HWPLK) on Android 6.0
+"main" tid=1 Native 
+"main" prio=5 tid=1 Native
+  | group="main" sCount=1 dsCount=0 obj=0x74e60fb8 self=0x559725cb70
+  | sysTid=14209 nice=-1 cgrp=top_visible sched=0/0 handle=0x7fb1b8d000
+  | state=S schedstat=( 768957488 69587440 650 ) utm=69 stm=7 core=3 HZ=100
+  | stack=0x7fe6a0a000-0x7fe6a0c000 stackSize=8MB
+  | held mutexes=
+  at android.view.ThreadedRenderer.nSyncAndDrawFrame (Native method)
+  at android.view.ThreadedRenderer.draw (ThreadedRenderer.java:368)
+  at android.view.ViewRootImpl.draw (ViewRootImpl.java:2687)
+  at android.view.ViewRootImpl.performDraw (ViewRootImpl.java:2496)
+  at android.view.ViewRootImpl.performTraversals (ViewRootImpl.java:2121)
+  at android.view.ViewRootImpl.doTraversal (ViewRootImpl.java:1139)
+  at android.view.ViewRootImpl$TraversalRunnable.run (ViewRootImpl.java:6238)
+  at android.view.Choreographer$CallbackRecord.run (Choreographer.java:884)
+  at android.view.Choreographer.doCallbacks (Choreographer.java:696)
+  at android.view.Choreographer.doFrame (Choreographer.java:631)
+  at android.view.Choreographer$FrameDisplayEventReceiver.run (Choreographer.java:870)
+  at android.os.Handler.handleCallback (Handler.java:743)
+  at android.os.Handler.dispatchMessage (Handler.java:95)
+  at android.os.Looper.loop (Looper.java:150)
+  at android.app.ActivityThread.main (ActivityThread.java:5621)
+  at java.lang.reflect.Method.invoke! (Native method)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run (ZygoteInit.java:794)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:684)
+  
+Occurrence: Moderate
+On : All devices ?
+PlayStore Report Name : java.lang.NullPointerException : org.citra.citra_android.ui.settings.SettingsFragmentPresenter.loadSettingsList
+Android Version : Android Version, Number of reports, Number of reports %
+  Android 8.0, 170, 57,0 %
+  Android 8.1, 50, 16,8 %
+  Android 7.1, 43, 14,4 %
+  Android 7.0, 35, 11,7 %
+App Version : App Version, Number of reports, Number of reports %
+  32, 275, 92,3 %
+  37,	23, 7,7 %
+Most impacted devices : Device Name, Number of reports, Number of reports %
+  Mate 10 lite (HWRNE), 15, 5,0 %
+  Galaxy S8 (dreamlte), 13, 4,4 %
+  P20 lite (HWANE), 13, 4,4 %
+  HUAWEI Y7 Prime 2018 (HWLDN-Q), 12, 4,0 %
+  Redmi Note 4 (mido), 11, 3,7 %
+   More...(XX,X%)
+
+Error: 
+  Caused by: java.lang.NullPointerException: 
+    at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.loadSettingsList (SettingsFragmentPresenter.java:95)
+    at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.setSettings (SettingsFragmentPresenter.java:79)
+    at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.onViewCreated (SettingsFragmentPresenter.java:47)
+    at org.citra.citra_android.ui.settings.SettingsFragment.onViewCreated (SettingsFragment.java:105)
+  
+Ex : Huawei Mate 10 lite (HWRNE) on Android 8.0
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.performResumeActivity (ActivityThread.java:4179)
+  at android.app.ActivityThread.handleResumeActivity (ActivityThread.java:4219)
+  at android.app.ActivityThread.handleLaunchActivity (ActivityThread.java:3314)
+  at android.app.ActivityThread.handleRelaunchActivity (ActivityThread.java:5368)
+  at android.app.ActivityThread.-wrap19 (Unknown Source)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1897)
+  at android.os.Handler.dispatchMessage (Handler.java:108)
+  at android.os.Looper.loop (Looper.java:166)
+  at android.app.ActivityThread.main (ActivityThread.java:7425)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.Zygote$MethodAndArgsCaller.run (Zygote.java:245)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:921)
+Caused by: java.lang.NullPointerException: 
+  at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.loadSettingsList (SettingsFragmentPresenter.java:95)
+  at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.setSettings (SettingsFragmentPresenter.java:79)
+  at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.onViewCreated (SettingsFragmentPresenter.java:47)
+  at org.citra.citra_android.ui.settings.SettingsFragment.onViewCreated (SettingsFragment.java:105)
+  at android.support.v4.app.FragmentManagerImpl.moveToState (FragmentManager.java:1471)
+  at android.support.v4.app.FragmentManagerImpl.moveFragmentToExpectedState (FragmentManager.java:1784)
+  at android.support.v4.app.FragmentManagerImpl.moveToState (FragmentManager.java:1852)
+  at android.support.v4.app.BackStackRecord.executeOps (BackStackRecord.java:802)
+  at android.support.v4.app.FragmentManagerImpl.executeOps (FragmentManager.java:2625)
+  at android.support.v4.app.FragmentManagerImpl.executeOpsTogether (FragmentManager.java:2411)
+  at android.support.v4.app.FragmentManagerImpl.removeRedundantOperationsAndExecute (FragmentManager.java:2366)
+  at android.support.v4.app.FragmentManagerImpl.execPendingActions (FragmentManager.java:2273)
+  at android.support.v4.app.FragmentController.execPendingActions (FragmentController.java:391)
+  at android.support.v4.app.FragmentActivity.onResume (FragmentActivity.java:517)
+  at android.app.Instrumentation.callActivityOnResume (Instrumentation.java:1364)
+  at android.app.Activity.performResume (Activity.java:7479)
+  at android.app.ActivityThread.performResumeActivity (ActivityThread.java:4147)
+  
+Ex : Cherry Mobile Flare S6 (Cherry_Flare_S6) on Android 7.0
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.performResumeActivity (ActivityThread.java:3551)
+  at android.app.ActivityThread.handleResumeActivity (ActivityThread.java:3591)
+  at android.app.ActivityThread.handleLaunchActivity (ActivityThread.java:2825)
+  at android.app.ActivityThread.handleRelaunchActivity (ActivityThread.java:4670)
+  at android.app.ActivityThread.-wrap19 (ActivityThread.java)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1548)
+  at android.os.Handler.dispatchMessage (Handler.java:110)
+  at android.os.Looper.loop (Looper.java:203)
+  at android.app.ActivityThread.main (ActivityThread.java:6331)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run (ZygoteInit.java:1085)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:946)
+Caused by: java.lang.NullPointerException: 
+  at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.loadSettingsList (SettingsFragmentPresenter.java:95)
+  at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.setSettings (SettingsFragmentPresenter.java:79)
+  at org.citra.citra_android.ui.settings.SettingsFragmentPresenter.onViewCreated (SettingsFragmentPresenter.java:47)
+  at org.citra.citra_android.ui.settings.SettingsFragment.onViewCreated (SettingsFragment.java:105)
+  at android.support.v4.app.FragmentManagerImpl.moveToState (FragmentManager.java:1471)
+  at android.support.v4.app.FragmentManagerImpl.moveFragmentToExpectedState (FragmentManager.java:1784)
+  at android.support.v4.app.FragmentManagerImpl.moveToState (FragmentManager.java:1852)
+  at android.support.v4.app.BackStackRecord.executeOps (BackStackRecord.java:802)
+  at android.support.v4.app.FragmentManagerImpl.executeOps (FragmentManager.java:2625)
+  at android.support.v4.app.FragmentManagerImpl.executeOpsTogether (FragmentManager.java:2411)
+  at android.support.v4.app.FragmentManagerImpl.removeRedundantOperationsAndExecute (FragmentManager.java:2366)
+  at android.support.v4.app.FragmentManagerImpl.execPendingActions (FragmentManager.java:2273)
+  at android.support.v4.app.FragmentController.execPendingActions (FragmentController.java:391)
+  at android.support.v4.app.FragmentActivity.onResume (FragmentActivity.java:517)
+  at android.app.Instrumentation.callActivityOnResume (Instrumentation.java:1269)
+  at android.app.Activity.performResume (Activity.java:6770)
+  at android.app.ActivityThread.performResumeActivity (ActivityThread.java:3522)
+  
+Occurrence: Strong
+On : All Devices ?
+PlayStore Report Name : java.lang.IllegalArgumentException : org.citra.citra_android.utils.PicassoUtils.loadGameBanner
+Android Version : Android Version, Number of reports, Number of reports %
+  Android 8.0, 239, 33,0 %
+  Android 8.1, 239, 33,0 %
+  Android 9, 103, 14,2 %
+  Android 7.0, 75, 10,4 %
+  Android 7.1, 68, 9,4 %
+App Version : App Version, Number of reports, Number of reports %
+  32, 649, 89,6 %
+  37, 61, 8,4 %
+  9, 8, 1,1 %
+  22, 6, 0,8 %
+Most impacted devices : Device Name, Number of reports, Number of reports %
+  Galaxy S8 (dreamlteks), 33, 4,6 %
+  OnePlus5T (OnePlus5T), 32, 4,4 %
+  POCO F1 (beryllium), 30, 4,1 %
+  CPH1803 (CPH1803), 28, 3,9 %
+  Galaxy S6 (zerofltevzw), 25, 3,5 %
+   More...(XX,X%)
+
+Error: 
+ java.lang.IllegalArgumentException: 
+  at java.net.URI.create (URI.java:848)
+  at org.citra.citra_android.utils.PicassoUtils.loadGameBanner (PicassoUtils.java:18)
+  at org.citra.citra_android.adapters.GameAdapter.onBindViewHolder (GameAdapter.java:78)
+  at org.citra.citra_android.adapters.GameAdapter.onBindViewHolder (GameAdapter.java:24)
+  [...]
+  Caused by: java.net.URISyntaxException: 
+  at java.net.URI$Parser.fail (URI.java:2893)
+  at java.net.URI$Parser.checkChars (URI.java:3066)
+  at java.net.URI$Parser.parseHierarchical (URI.java:3150)
+  at java.net.URI$Parser.parse (URI.java:3098)
+  at java.net.URI.<init> (URI.java:584)
+  at java.net.URI.create (URI.java:846)
+  
+Ex : Xiaomi Mi A2 Lite (daisy_sprout) on Android 9
+java.lang.IllegalArgumentException: 
+  at java.net.URI.create (URI.java:848)
+  at org.citra.citra_android.utils.PicassoUtils.loadGameBanner (PicassoUtils.java:18)
+  at org.citra.citra_android.adapters.GameAdapter.onBindViewHolder (GameAdapter.java:78)
+  at org.citra.citra_android.adapters.GameAdapter.onBindViewHolder (GameAdapter.java:24)
+  at android.support.v7.widget.RecyclerView$Adapter.onBindViewHolder (RecyclerView.java:6781)
+  at android.support.v7.widget.RecyclerView$Adapter.bindViewHolder (RecyclerView.java:6823)
+  at android.support.v7.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline (RecyclerView.java:5752)
+  at android.support.v7.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline (RecyclerView.java:6019)
+  at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition (RecyclerView.java:5858)
+  at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition (RecyclerView.java:5854)
+  at android.support.v7.widget.LinearLayoutManager$LayoutState.next (LinearLayoutManager.java:2230)
+  at android.support.v7.widget.GridLayoutManager.layoutChunk (GridLayoutManager.java:557)
+  at android.support.v7.widget.LinearLayoutManager.fill (LinearLayoutManager.java:1517)
+  at android.support.v7.widget.LinearLayoutManager.onLayoutChildren (LinearLayoutManager.java:612)
+  at android.support.v7.widget.GridLayoutManager.onLayoutChildren (GridLayoutManager.java:171)
+  at android.support.v7.widget.RecyclerView.dispatchLayoutStep2 (RecyclerView.java:3924)
+  at android.support.v7.widget.RecyclerView.dispatchLayout (RecyclerView.java:3641)
+  at android.support.v7.widget.RecyclerView.onLayout (RecyclerView.java:4194)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.support.design.widget.HeaderScrollingViewBehavior.layoutChild (HeaderScrollingViewBehavior.java:142)
+  at android.support.design.widget.ViewOffsetBehavior.onLayoutChild (ViewOffsetBehavior.java:41)
+  at android.support.design.widget.AppBarLayout$ScrollingViewBehavior.onLayoutChild (AppBarLayout.java:1556)
+  at android.support.design.widget.CoordinatorLayout.onLayout (CoordinatorLayout.java:888)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.LinearLayout.setChildFrame (LinearLayout.java:1812)
+  at android.widget.LinearLayout.layoutVertical (LinearLayout.java:1656)
+  at android.widget.LinearLayout.onLayout (LinearLayout.java:1565)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.LinearLayout.setChildFrame (LinearLayout.java:1812)
+  at android.widget.LinearLayout.layoutVertical (LinearLayout.java:1656)
+  at android.widget.LinearLayout.onLayout (LinearLayout.java:1565)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at com.android.internal.policy.DecorView.onLayout (DecorView.java:753)
+  at android.view.View.layout (View.java:20684)
+  at android.view.ViewGroup.layout (ViewGroup.java:6194)
+  at android.view.ViewRootImpl.performLayout (ViewRootImpl.java:2801)
+  at android.view.ViewRootImpl.performTraversals (ViewRootImpl.java:2328)
+  at android.view.ViewRootImpl.doTraversal (ViewRootImpl.java:1468)
+  at android.view.ViewRootImpl$TraversalRunnable.run (ViewRootImpl.java:7208)
+  at android.view.Choreographer$CallbackRecord.run (Choreographer.java:1004)
+  at android.view.Choreographer.doCallbacks (Choreographer.java:816)
+  at android.view.Choreographer.doFrame (Choreographer.java:751)
+  at android.view.Choreographer$FrameDisplayEventReceiver.run (Choreographer.java:990)
+  at android.os.Handler.handleCallback (Handler.java:873)
+  at android.os.Handler.dispatchMessage (Handler.java:99)
+  at android.os.Looper.loop (Looper.java:193)
+  at android.app.ActivityThread.main (ActivityThread.java:6694)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run (RuntimeInit.java:493)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:858)
+Caused by: java.net.URISyntaxException: 
+  at java.net.URI$Parser.fail (URI.java:2893)
+  at java.net.URI$Parser.checkChars (URI.java:3066)
+  at java.net.URI$Parser.parseHierarchical (URI.java:3150)
+  at java.net.URI$Parser.parse (URI.java:3098)
+  at java.net.URI.<init> (URI.java:584)
+  at java.net.URI.create (URI.java:846)
+  
+Ex : Wiko Harry2 (W-V600) on Android 8.1
+  java.lang.IllegalArgumentException: 
+  at java.net.URI.create (URI.java:847)
+  at org.citra.citra_android.utils.PicassoUtils.loadGameBanner (PicassoUtils.java:18)
+  at org.citra.citra_android.adapters.GameAdapter.onBindViewHolder (GameAdapter.java:78)
+  at org.citra.citra_android.adapters.GameAdapter.onBindViewHolder (GameAdapter.java:24)
+  at android.support.v7.widget.RecyclerView$Adapter.onBindViewHolder (RecyclerView.java:6781)
+  at android.support.v7.widget.RecyclerView$Adapter.bindViewHolder (RecyclerView.java:6823)
+  at android.support.v7.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline (RecyclerView.java:5752)
+  at android.support.v7.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline (RecyclerView.java:6019)
+  at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition (RecyclerView.java:5858)
+  at android.support.v7.widget.RecyclerView$Recycler.getViewForPosition (RecyclerView.java:5854)
+  at android.support.v7.widget.LinearLayoutManager$LayoutState.next (LinearLayoutManager.java:2230)
+  at android.support.v7.widget.GridLayoutManager.layoutChunk (GridLayoutManager.java:557)
+  at android.support.v7.widget.LinearLayoutManager.fill (LinearLayoutManager.java:1517)
+  at android.support.v7.widget.LinearLayoutManager.onLayoutChildren (LinearLayoutManager.java:612)
+  at android.support.v7.widget.GridLayoutManager.onLayoutChildren (GridLayoutManager.java:171)
+  at android.support.v7.widget.RecyclerView.dispatchLayoutStep2 (RecyclerView.java:3924)
+  at android.support.v7.widget.RecyclerView.dispatchLayout (RecyclerView.java:3641)
+  at android.support.v7.widget.RecyclerView.onLayout (RecyclerView.java:4194)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.support.design.widget.HeaderScrollingViewBehavior.layoutChild (HeaderScrollingViewBehavior.java:142)
+  at android.support.design.widget.ViewOffsetBehavior.onLayoutChild (ViewOffsetBehavior.java:41)
+  at android.support.design.widget.AppBarLayout$ScrollingViewBehavior.onLayoutChild (AppBarLayout.java:1556)
+  at android.support.design.widget.CoordinatorLayout.onLayout (CoordinatorLayout.java:888)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.LinearLayout.setChildFrame (LinearLayout.java:1791)
+  at android.widget.LinearLayout.layoutVertical (LinearLayout.java:1635)
+  at android.widget.LinearLayout.onLayout (LinearLayout.java:1544)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.LinearLayout.setChildFrame (LinearLayout.java:1791)
+  at android.widget.LinearLayout.layoutVertical (LinearLayout.java:1635)
+  at android.widget.LinearLayout.onLayout (LinearLayout.java:1544)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.widget.FrameLayout.layoutChildren (FrameLayout.java:323)
+  at android.widget.FrameLayout.onLayout (FrameLayout.java:261)
+  at com.android.internal.policy.DecorView.onLayout (DecorView.java:797)
+  at android.view.View.layout (View.java:19815)
+  at android.view.ViewGroup.layout (ViewGroup.java:6150)
+  at android.view.ViewRootImpl.performLayout (ViewRootImpl.java:2605)
+  at android.view.ViewRootImpl.performTraversals (ViewRootImpl.java:2310)
+  at android.view.ViewRootImpl.doTraversal (ViewRootImpl.java:1446)
+  at android.view.ViewRootImpl$TraversalRunnable.run (ViewRootImpl.java:7014)
+  at android.view.Choreographer$CallbackRecord.run (Choreographer.java:916)
+  at android.view.Choreographer.doCallbacks (Choreographer.java:728)
+  at android.view.Choreographer.doFrame (Choreographer.java:660)
+  at android.view.Choreographer$FrameDisplayEventReceiver.run (Choreographer.java:902)
+  at android.os.Handler.handleCallback (Handler.java:790)
+  at android.os.Handler.dispatchMessage (Handler.java:99)
+  at android.os.Looper.loop (Looper.java:164)
+  at android.app.ActivityThread.main (ActivityThread.java:6523)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run (RuntimeInit.java:438)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:857)
+Caused by: java.net.URISyntaxException: 
+  at java.net.URI$Parser.fail (URI.java:2875)
+  at java.net.URI$Parser.checkChars (URI.java:3048)
+  at java.net.URI$Parser.parseHierarchical (URI.java:3132)
+  at java.net.URI$Parser.parse (URI.java:3080)
+  at java.net.URI.<init> (URI.java:583)
+  at java.net.URI.create (URI.java:845)
+  
+Occurrence: Moderate
+On : Android 6 ?
+PlayStore Report Name : java.lang.IllegalStateException : org.citra.citra_android.ui.main.MainActivity.onRequestPermissionsResult
+Android Version : Android Version, Number of reports, Number of reports %
+  Android 6.0	768	100,0 %
+App Version : App Version, Number of reports, Number of reports %
+  32, 704, 91,7 %
+  37, 64, 8,3 %
+Most impacted devices : Device Name, Number of reports, Number of reports %
+  Galaxy Grand Prime Plus (grandpplte), 56, 7,3 %
+  Y53 (1606), 44, 5,7 %
+  Galaxy J7 (j7elte), 30, 3,9 %
+  Galaxy J7 Prime (on7xelte), 24, 3,1 %
+  CPH1613 (CPH1613), 21, 2,7 %
+   More...(XX,X%)
+   
+ Error : 
+  java.lang.RuntimeException: X
+  Caused by: java.lang.IllegalStateException: at org.citra.citra_android.ui.main.MainActivity.onRequestPermissionsResult (MainActivity.java:179)
+  
+Ex : Xiaomi MI 4LTE (cancro) on Android 6.0
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.deliverResults (ActivityThread.java:3800)
+  at android.app.ActivityThread.handleSendResult (ActivityThread.java:3843)
+  at android.app.ActivityThread.access$1500 (ActivityThread.java:156)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1458)
+  at android.os.Handler.dispatchMessage (Handler.java:102)
+  at android.os.Looper.loop (Looper.java:157)
+  at android.app.ActivityThread.main (ActivityThread.java:5653)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run (ZygoteInit.java:746)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:636)
+Caused by: java.lang.IllegalStateException: 
+  at android.support.v4.app.FragmentManagerImpl.checkStateLoss (FragmentManager.java:2080)
+  at android.support.v4.app.FragmentManagerImpl.enqueueAction (FragmentManager.java:2106)
+  at android.support.v4.app.BackStackRecord.commitInternal (BackStackRecord.java:683)
+  at android.support.v4.app.BackStackRecord.commit (BackStackRecord.java:637)
+  at org.citra.citra_android.ui.main.MainActivity.onRequestPermissionsResult (MainActivity.java:179)
+  at android.app.Activity.dispatchRequestPermissionsResult (Activity.java:6688)
+  at android.app.Activity.dispatchActivityResult (Activity.java:6566)
+  at android.app.ActivityThread.deliverResults (ActivityThread.java:3796)
+  
+Ex : LGE LG K10 LTE (m253) on Android 6.0
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.deliverResults (ActivityThread.java:3742)
+  at android.app.ActivityThread.handleSendResult (ActivityThread.java:3785)
+  at android.app.ActivityThread.access$1400 (ActivityThread.java:157)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1405)
+  at android.os.Handler.dispatchMessage (Handler.java:102)
+  at android.os.Looper.loop (Looper.java:148)
+  at android.app.ActivityThread.main (ActivityThread.java:5530)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run (ZygoteInit.java:734)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:624)
+Caused by: java.lang.IllegalStateException: 
+  at android.support.v4.app.FragmentManagerImpl.checkStateLoss (FragmentManager.java:2080)
+  at android.support.v4.app.FragmentManagerImpl.enqueueAction (FragmentManager.java:2106)
+  at android.support.v4.app.BackStackRecord.commitInternal (BackStackRecord.java:683)
+  at android.support.v4.app.BackStackRecord.commit (BackStackRecord.java:637)
+  at org.citra.citra_android.ui.main.MainActivity.onRequestPermissionsResult (MainActivity.java:179)
+  at android.app.Activity.dispatchRequestPermissionsResult (Activity.java:6588)
+  at android.app.Activity.dispatchActivityResult (Activity.java:6467)
+  at android.app.ActivityThread.deliverResults (ActivityThread.java:3738)
+  
+Ex : ZTE Blade V6 Plus (ZTE_BLADE_V0720) on Android 6.0
+java.lang.RuntimeException: 
+  at android.app.ActivityThread.deliverResults (ActivityThread.java:3940)
+  at android.app.ActivityThread.handleSendResult (ActivityThread.java:3983)
+  at android.app.ActivityThread.access$1400 (ActivityThread.java:179)
+  at android.app.ActivityThread$H.handleMessage (ActivityThread.java:1548)
+  at android.os.Handler.dispatchMessage (Handler.java:111)
+  at android.os.Looper.loop (Looper.java:207)
+  at android.app.ActivityThread.main (ActivityThread.java:5765)
+  at java.lang.reflect.Method.invoke (Native Method)
+  at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run (ZygoteInit.java:789)
+  at com.android.internal.os.ZygoteInit.main (ZygoteInit.java:679)
+Caused by: java.lang.IllegalStateException: 
+  at android.support.v4.app.FragmentManagerImpl.checkStateLoss (FragmentManager.java:2080)
+  at android.support.v4.app.FragmentManagerImpl.enqueueAction (FragmentManager.java:2106)
+  at android.support.v4.app.BackStackRecord.commitInternal (BackStackRecord.java:683)
+  at android.support.v4.app.BackStackRecord.commit (BackStackRecord.java:637)
+  at org.citra.citra_android.ui.main.MainActivity.onRequestPermissionsResult (MainActivity.java:179)
+  at android.app.Activity.dispatchRequestPermissionsResult (Activity.java:6625)
+  at android.app.Activity.dispatchActivityResult (Activity.java:6504)
+  at android.app.ActivityThread.deliverResults (ActivityThread.java:3936)
