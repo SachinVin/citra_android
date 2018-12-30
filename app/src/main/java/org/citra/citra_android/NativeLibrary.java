@@ -94,6 +94,15 @@ public final class NativeLibrary
   public static native boolean onGamePadMoveEvent(String Device, int Axis, float x_axis, float y_axis);
 
   /**
+   * Handles gamepad movement events.
+   *
+   * @param Device The device ID of the gamepad.
+   * @param Axis_id   The axis ID
+   * @param axis_val The value of the axis represented by the given ID.
+   */
+  public static native boolean onGamePadAxisEvent(String Device, int Axis_id, float axis_val);
+
+  /**
    * Handles touch events.
    *
    * @param x_axis  The value of the x-axis.

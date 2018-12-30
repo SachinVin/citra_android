@@ -782,6 +782,7 @@ public final class EmulationActivity extends AppCompatActivity
     float[] axisValues = {0.0f, 0.0f};
     for (InputDevice.MotionRange range : motions)
     {
+      boolean consumed = false;
       int axis = range.getAxis();
       float origValue = event.getAxisValue(axis);
       float value = mControllerMappingHelper.scaleAxis(input, axis, origValue);
@@ -799,15 +800,17 @@ public final class EmulationActivity extends AppCompatActivity
       // This is used to compensate for imprecision in joysticks.
       if (Math.abs(axisValues[0]) > range.getFlat() || Math.abs(axisValues[1]) > range.getFlat())
       {
-        NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, axisValues[0], axisValues[1]);
+        consumed = NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, axisValues[0], axisValues[1]);
       }
       else
       {
-        NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, 0.0f, 0.0f);
+        consumed = NativeLibrary.onGamePadMoveEvent(input.getDescriptor(), axis, 0.0f, 0.0f);
       }
+
+      return NativeLibrary.onGamePadAxisEvent(input.getDescriptor(),axis, value) || consumed;
     }
 
-    return true;
+    return false;
   }
 
   private void showSubMenu(SaveLoadStateFragment.SaveOrLoad saveOrLoad)
