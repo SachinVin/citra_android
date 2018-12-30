@@ -91,7 +91,7 @@ public final class NativeLibrary
    * @param x_axis The value of the x-axis represented by the given ID.
    * @param y_axis The value of the y-axis represented by the given ID
    */
-  public static native void onGamePadMoveEvent(String Device, int Axis, float x_axis, float y_axis);
+  public static native boolean onGamePadMoveEvent(String Device, int Axis, float x_axis, float y_axis);
 
   /**
    * Handles touch events.
