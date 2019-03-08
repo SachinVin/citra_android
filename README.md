@@ -11,8 +11,10 @@ Since this code is almost entirely a copy of the Dolphin frontend,there are a lo
 ### Device Requirements
 * OS
   * Android (5.0 Lollipop or higher).
+  * ROM must have ability to run 64-bit code, A cross compiled 64-bit OS (such as an unnoficial ROMs for the Motorola g5/s/+ are not supported.)
 * Processor
   * A processor with support for either ARMv8 or x86-64; 32-bit processors (ARMv7, x86) are not supported by Citra.
+  * a high end processor is required for "good" performance. KEEP IN MIND this emulator is in its development stage... if you dont know what that means, it means come back in a year or two with better hardware.
 * Graphics
   * A graphics processor that supports OpenGL ES 3.2 or higher.
     
@@ -33,4 +35,4 @@ You're all set, now hit build.
 Since this is in very early stages of development a lot of things don't quite work properly yet:
 * Colors in games (since GLES doesn't support BGR color ordering, the color channels may be inverted);
 * Since this is based on an older version of Citra, bugs solved on newer versions of Citra may still be present.
-
+* seems to attract whiny morons with cheap phones who relentlessly rush developers.
